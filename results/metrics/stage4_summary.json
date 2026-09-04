@@ -1,0 +1,237 @@
+{
+  "stage": 4,
+  "seed": 42,
+  "dataset": {
+    "path": "data/selected/english_selected_v2.jsonl",
+    "sha256": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+    "rows": 1200,
+    "smoke_rows": 4,
+    "smoke_split": "train",
+    "modified": false
+  },
+  "downstream_extraction_policy": {
+    "batch_size": 4,
+    "batch_order": "frozen_manifest_order",
+    "batch_membership": "consecutive_rows",
+    "padding": "dynamic",
+    "padding_side": "right",
+    "truncation": false,
+    "final_token_selection": "rightmost_nonzero_attention_mask",
+    "activation_mapping": "raw_outputs_all_32_decoder_blocks_via_forward_hooks",
+    "storage_dtype": "float32",
+    "languages": [
+      "english",
+      "spanish",
+      "japanese"
+    ],
+    "same_extraction_path_all_languages": true
+  },
+  "environment": {
+    "python": "3.12.3",
+    "torch": "2.14.0+cu130",
+    "transformers": "5.16.1",
+    "datasets": "4.8.5",
+    "accelerate": "1.14.0",
+    "huggingface_hub": "1.30.0",
+    "pyyaml": "6.0.3",
+    "cuda_runtime": "13.0",
+    "cudnn": 92400,
+    "gpu": "NVIDIA A40",
+    "gpu_total_mib": 45488.0625,
+    "bf16_supported": true,
+    "torchaudio_visible": false
+  },
+  "model": {
+    "id": "Qwen/Qwen3.5-9B",
+    "requested_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "resolved_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "top_config_class": "Qwen3_5Config",
+    "top_config_architectures": [
+      "Qwen3_5ForConditionalGeneration"
+    ],
+    "text_config_class": "Qwen3_5TextConfig",
+    "loaded_model_class": "Qwen3_5ForCausalLM",
+    "loaded_config_commit_hash": null,
+    "parameter_count": 8953803264,
+    "language_model_blocks": 32,
+    "hidden_size": 4096,
+    "parameter_dtypes": [
+      "torch.bfloat16"
+    ],
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "device_map": null,
+    "loading_info": {
+      "missing_keys": [],
+      "mismatched_keys": [],
+      "unexpected_key_count": 0,
+      "unexpected_key_prefix_counts": {},
+      "error_messages": []
+    }
+  },
+  "tokenizer": {
+    "class": "Qwen2Tokenizer",
+    "padding_side": "right",
+    "pad_token_id": 248044,
+    "pad_token": "<|endoftext|>",
+    "eos_token_id": 248046,
+    "add_generation_prompt": true,
+    "system_message_used": false,
+    "smoke_batch_shape": [
+      4,
+      166
+    ],
+    "chat_template_round_trip_exact": true,
+    "smoke_token_count_min": 34,
+    "smoke_token_count_max": 166,
+    "final_nonpadding_indices": [
+      44,
+      33,
+      83,
+      165
+    ],
+    "final_nonpadding_token_same_for_all": true,
+    "final_nonpadding_token_id": 198,
+    "final_nonpadding_token_decoded": "\n",
+    "sum_mask_minus_one_is_final_index": true
+  },
+  "hidden_states": {
+    "api_returned_count": 33,
+    "api_common_shape": [
+      4,
+      166,
+      4096
+    ],
+    "api_all_shapes_identical": true,
+    "api_returned_dtype": "torch.bfloat16",
+    "api_mapping": [
+      {
+        "returned_index": 0,
+        "source": "exact embedding output"
+      },
+      {
+        "returned_indices": "1-31",
+        "transformer_blocks_1_based": "1-31",
+        "source": "exact raw decoder-block outputs"
+      },
+      {
+        "returned_index": 32,
+        "source": "exact terminal RMSNorm output after raw block 32; not raw block 32"
+      }
+    ],
+    "embedding_included": true,
+    "raw_block_32_included_by_api": false,
+    "returned_index_0_vs_embedding": {
+      "shape_match": true,
+      "exact": true,
+      "max_abs_difference": 0.0
+    },
+    "returned_indices_1_to_31_exactly_match_blocks_1_to_31": true,
+    "returned_index_32_vs_terminal_norm": {
+      "shape_match": true,
+      "exact": true,
+      "max_abs_difference": 0.0
+    },
+    "returned_index_32_vs_raw_block_32": {
+      "shape_match": true,
+      "exact": false,
+      "max_abs_difference": 229.0
+    },
+    "stored_mapping": {
+      "stored_indices": "0-31",
+      "transformer_blocks_1_based": "1-32",
+      "source": "raw forward-hook outputs from model.model.layers[0:32]"
+    },
+    "stored_activation_shape": [
+      4,
+      32,
+      4096
+    ],
+    "stored_activation_dtype": "float32",
+    "all_finite": true
+  },
+  "batched_vs_single": {
+    "strict_elementwise_rtol": 0.02,
+    "strict_elementwise_atol": 0.02,
+    "strict_elementwise_allclose": false,
+    "minimum_cosine_required": 0.999,
+    "maximum_relative_l2_allowed": 0.05,
+    "agreement_criterion_passed": true,
+    "max_abs_difference": 1.5,
+    "mean_abs_difference": 0.017855897545814514,
+    "minimum_layer_cosine_similarity": 0.9993124008178711,
+    "maximum_layer_cosine_similarity": 0.9999995827674866,
+    "maximum_layer_relative_l2": 0.037078216671943665
+  },
+  "artifact": {
+    "path": "artifacts/activations/stage4_smoke.npz",
+    "sha256": "0f32ae1c528a5f66a7c78771f9a12a92a86b0cd2a16549520113e2b3a48bb5ca",
+    "ids_unchanged": true,
+    "quadrants_unchanged": true,
+    "shape": [
+      4,
+      32,
+      4096
+    ],
+    "shape_unchanged": true,
+    "values_exact": true,
+    "all_finite": true
+  },
+  "gpu_memory": {
+    "after_model_load": {
+      "allocated_mib": 17078.0517578125,
+      "reserved_mib": 17096.0,
+      "peak_allocated_mib": 17078.05224609375
+    },
+    "after_smoke_forward": {
+      "allocated_mib": 17265.89453125,
+      "reserved_mib": 17482.0,
+      "peak_allocated_mib": 17427.6318359375
+    }
+  },
+  "throughput_benchmark": {
+    "selection": "four character-length quantiles per quadrant",
+    "split": "train",
+    "rows": 16,
+    "quadrant_counts": {
+      "bench_eval": 4,
+      "casual_eval": 4,
+      "bench_deploy": 4,
+      "casual_deploy": 4
+    },
+    "batch_size": 4,
+    "batches": 4,
+    "elapsed_seconds": 0.7397667160257697,
+    "nonpadding_input_tokens": 893,
+    "padded_input_tokens": 1156,
+    "padding_fraction": 0.22750865051903113,
+    "prompts_per_second": 21.628439957337363,
+    "nonpadding_tokens_per_second": 1207.1373051188916,
+    "peak_allocated_mib": 17308.7275390625,
+    "peak_reserved_mib": 17340.0,
+    "projected_1200_seconds": 55.48250370193273,
+    "projected_1200_minutes": 0.9247083950322121,
+    "includes_gpu_to_cpu_float32_transfer": true,
+    "generated_answers": false
+  },
+  "forward": {
+    "inference_mode": true,
+    "generated_answers": false,
+    "use_cache": false,
+    "output_hidden_states": true,
+    "return_dict": true,
+    "logits_to_keep": 1
+  },
+  "correctness": {
+    "checkpoint_passed": true,
+    "dataset_hash_verified_before_and_after_model_load": true,
+    "checkpoint_loaded_completely": true,
+    "chat_template_round_trip_exact": true,
+    "final_nonpadding_indexing_verified": true,
+    "activation_shape_verified": true,
+    "activations_all_finite": true,
+    "artifact_round_trip_exact": true,
+    "full_stage5_extraction_run": false
+  }
+}

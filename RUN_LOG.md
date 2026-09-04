@@ -156,3 +156,78 @@ For each run include:
 - The official model-card loading path uses `AutoProcessor` and
   `AutoModelForMultimodalLM`. The handoff checks that these classes, CUDA, and
   BF16 support are available before Stage 4.
+
+## 2026-09-04 — Checkpoint 4 Qwen GPU smoke test
+
+- Final command:
+  `HF_HOME=/workspace/.cache/huggingface .venv/bin/python -m src.model_smoke_test --config config.yaml --dataset data/selected/english_selected_v2.jsonl --dataset-sha256 4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639 --model Qwen/Qwen3.5-9B --revision c202236235762e1c871ad0ccb60c8ee5ba337b9a`.
+- Validation commands:
+  - `.venv/bin/python -m py_compile src/model_smoke_test.py src/extract_activations.py`
+  - `.venv/bin/python -m pytest -q -W error`
+  - `.venv/bin/python -m pip check`
+  - `sha256sum data/selected/english_selected_v2.jsonl artifacts/activations/stage4_smoke.npz`
+  - `.venv/bin/python -m pip freeze --all > results/metrics/stage4_environment.txt`
+- Seed: 42. Smoke sample: four training rows, one per quadrant. Throughput
+  sample: 16 training rows, four character-length quantiles per quadrant.
+- Frozen v2 path and SHA-256:
+  `data/selected/english_selected_v2.jsonl`,
+  `4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639`.
+  The file was checked before and after the model run and was not modified.
+- Model: `Qwen/Qwen3.5-9B`; requested and resolved revision:
+  `c202236235762e1c871ad0ccb60c8ee5ba337b9a`; loaded class:
+  `Qwen3_5ForCausalLM`; 8,953,803,264 parameters; BF16 on `cuda:0`;
+  32 language blocks; hidden size 4096. Loading information contained zero
+  missing, mismatched, unexpected, or error entries.
+- Environment: Python 3.12.3; PyTorch 2.14.0+cu130; Transformers 5.16.1;
+  datasets 4.8.5; Accelerate 1.14.0; huggingface_hub 1.30.0; PyYAML 6.0.3;
+  CUDA runtime 13.0; cuDNN 92400; NVIDIA A40; driver 580.159.04; BF16
+  supported. The isolated environment cannot import `torchaudio`.
+- The live hidden-state API returned 33 BF16 tensors of shape
+  `(4, 166, 4096)`. Index 0 exactly matched embeddings; indices 1–31
+  exactly matched raw blocks 1–31; index 32 exactly matched the terminal
+  RMSNorm output and did not match raw block 32. The stored activations
+  therefore use forward hooks for the raw outputs of all 32 blocks.
+- Dynamic right padding was verified manually and by assertions. For all four
+  smoke prompts, the final non-padding token was token ID 198 (decoded newline)
+  after `<think>`; final indices were 44, 33, 83, and 165.
+- Fixed downstream extraction policy: batch size 4; frozen-manifest order;
+  consecutive-row batches; dynamic right padding; no truncation; final token
+  selected as the rightmost nonzero attention-mask position; raw outputs of all
+  32 decoder blocks; CPU storage as float32. English, Spanish, and Japanese
+  must use this identical path and policy.
+- Stored activation shape: `(4, 32, 4096)`; all values finite. Artifact
+  `artifacts/activations/stage4_smoke.npz` reloaded with IDs, quadrants,
+  shape, and values exactly unchanged. Artifact SHA-256:
+  `0f32ae1c528a5f66a7c78771f9a12a92a86b0cd2a16549520113e2b3a48bb5ca`.
+- Batched versus single-example extraction passed the recorded numerical
+  agreement criterion: minimum layer cosine 0.9993124008178711 and maximum
+  per-layer relative L2 0.037078216671943665. Strict elementwise
+  `rtol=0.02, atol=0.02` all-close was false; maximum absolute difference
+  was 1.5 and mean absolute difference was 0.017855897545814514. This BF16
+  batch-shape dependence motivated freezing the batching policy.
+- GPU allocated-memory peak: 17,427.6318359375 MiB during the smoke forward.
+  The representative throughput benchmark peaked at 17,308.7275390625 MiB
+  allocated and 17,340 MiB reserved.
+- Throughput: 16 prompts and 893 non-padding tokens in 0.7397667160257697
+  seconds; 21.628439957337363 prompts/s and 1207.1373051188916 non-padding
+  tokens/s. Projected 1,200-prompt time: 55.48250370193273 seconds
+  (0.9247083950322121 minutes), including GPU-to-CPU float32 transfer and
+  excluding model load.
+- Tracked reporting files: compact aggregate-only
+  `results/metrics/stage4_summary.json` and package manifest
+  `results/metrics/stage4_environment.txt`.
+- The full `results/metrics/stage4_smoke.json` remains local and unstaged for
+  audit because it contains raw prompts, rendered templates, token IDs, and
+  attention masks. The activation artifact
+  `artifacts/activations/stage4_smoke.npz` is also local and ignored.
+- Checks: 19 tests passed with warnings treated as errors; `pip check`
+  reported no broken requirements; syntax and diff checks passed.
+- Issues fixed during Stage 4: isolated the venv from incompatible system
+  multimedia packages; corrected chat-template handling for a returned
+  `BatchEncoding`; diagnosed the live 33-state mapping; and made set-valued
+  loading metadata JSON-serializable. `torchaudio` was never installed.
+  `torchvision==0.29.0` was installed earlier during compatibility work and
+  remains in the isolated environment, but the smoke test does not import or
+  use it.
+- Warning: Hugging Face Hub access was unauthenticated. No Stage 5 extraction
+  or full-dataset activation extraction was run.
