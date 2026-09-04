@@ -136,3 +136,23 @@ For each run include:
   global optimum; verified source exclusions, unique prompts and deploy rows,
   paired split/fold invariants, and unchanged v1 SHA; 19 tests passed with
   warnings treated as errors.
+
+## 2026-09-04 — Checkpoint 3 compute handoff
+
+- Human approved continuing under time constraints with the v2 matched dataset.
+  The residual training-only length-probe mean CV AUROC of
+  `0.6553713151927438` remains a documented limitation; the v2 final test
+  partition remains uninspected by classifiers.
+- Prepared `docs/COMPUTE_SETUP.md`; no compute was provisioned and no model
+  weights were downloaded or loaded.
+- Initial target: one NVIDIA A40 48 GB or RTX A6000 48 GB, approximately 80 GB
+  or more usable persistent storage, Linux, and SSH access.
+- Repository remote:
+  `https://github.com/htzlpchtl/mats-eval-awareness-language.git`.
+- Frozen v2 SHA-256 carried into the handoff:
+  `4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639`.
+- Model: `Qwen/Qwen3.5-9B`; Hugging Face revision queried on 2026-09-04:
+  `c202236235762e1c871ad0ccb60c8ee5ba337b9a`.
+- The official model-card loading path uses `AutoProcessor` and
+  `AutoModelForMultimodalLM`. The handoff checks that these classes, CUDA, and
+  BF16 support are available before Stage 4.
