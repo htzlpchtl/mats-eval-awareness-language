@@ -1,0 +1,12 @@
+accelerate>=1.2,<2
+datasets>=3.2,<5
+matplotlib>=3.9,<4
+numpy>=1.26,<3
+openai>=1.59,<3
+pandas>=2.2,<3
+pytest>=8.3,<9
+PyYAML>=6.0,<7
+scikit-learn>=1.5,<2
+torch>=2.5,<3
+transformers>=4.57,<6
+

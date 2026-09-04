@@ -1,0 +1,40 @@
+.env
+.env.*
+!.env.example
+
+# Credentials and local API state
+*.pem
+*.key
+*token*
+.openrouter_cache/
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Model and dataset caches
+.cache/
+huggingface/
+**/.cache/huggingface/
+
+# Large, reproducible artifacts
+artifacts/activations/*
+!artifacts/activations/.gitkeep
+*.npy
+*.npz
+*.pt
+*.pth
+*.safetensors
+
+# Local/editor/OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+

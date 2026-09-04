@@ -1,0 +1,39 @@
+seed: 42
+
+model:
+  id: Qwen/Qwen3.5-9B
+  dtype: bfloat16
+  add_generation_prompt: true
+  use_cache: false
+
+dataset:
+  id: viliana-dev/eval-awareness-2x2
+  quadrants:
+    bench_eval:
+      config: bench_eval
+      context_label: 1
+      format_label: 1
+    casual_eval:
+      config: casual_eval_mutual
+      context_label: 1
+      format_label: 0
+    bench_deploy:
+      config: bench_deploy_rewritten
+      context_label: 0
+      format_label: 1
+    casual_deploy:
+      config: casual_deploy_matched
+      context_label: 0
+      format_label: 0
+  sample_per_quadrant: 300
+  train_per_quadrant: 210
+  test_per_quadrant: 90
+  cv_folds: 5
+
+probe:
+  penalty: l2
+  C: 1.0
+  max_iter: 2000
+  threshold: 0.5
+  primary_metric: roc_auc
+
