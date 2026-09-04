@@ -1,0 +1,26 @@
+{
+  "counts": {
+    "pairs": 600,
+    "pairs_by_split_and_format": {
+      "benchmark:test": 90,
+      "benchmark:train": 210,
+      "casual:test": 90,
+      "casual:train": 210
+    },
+    "rows": 1200,
+    "rows_by_quadrant": {
+      "bench_deploy": 300,
+      "bench_eval": 300,
+      "casual_deploy": 300,
+      "casual_eval": 300
+    }
+  },
+  "dataset_id": "viliana-dev/eval-awareness-2x2",
+  "dataset_revision": "a50e4c983e7e66ebbe8f160e3549cc98e29271d4",
+  "pair_id_format": "{format}__{sha256(eval_stable_id + '__' + deploy_stable_id)[:12]}",
+  "seed": 42,
+  "selected_data_path": "data/selected/english_selected_v2.jsonl",
+  "selected_data_sha256": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+  "stable_id_format": "{quadrant}__{original_row_index}__{sha256(text)[:12]}",
+  "version": "v2_final_candidate"
+}
