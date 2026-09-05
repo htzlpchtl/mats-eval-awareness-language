@@ -1,0 +1,90 @@
+{
+  "checkpoint": 7,
+  "scope": "English Probe A and Probe B only",
+  "inputs": {
+    "dataset": "data/selected/english_selected_v2.jsonl",
+    "dataset_sha256": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+    "activations": "artifacts/activations/stage5_english_v2.npz",
+    "activation_sha256": "dbac459e5670ee9e61fa90c7e62f4e60ce305589b6d1c55ac2b041c7c90136f8",
+    "activation_shape": [
+      1200,
+      32,
+      4096
+    ]
+  },
+  "probe_a": {
+    "selected_block_1_based": 1,
+    "mean_cv_auroc": 1.0,
+    "in_distribution_auroc": 1.0,
+    "in_distribution_accuracy": 1.0,
+    "crossed_format_auroc": 0.0,
+    "crossed_format_accuracy": 0.03333333333333333
+  },
+  "probe_b": {
+    "selected_block_1_based": 32,
+    "mean_cv_auroc": 0.9966836734693878,
+    "held_out_auroc": 0.997283950617284,
+    "held_out_accuracy": 0.9666666666666667,
+    "quadrants": {
+      "bench_eval": {
+        "n": 90,
+        "context_label": 1,
+        "mean_decision_score": 9.283227131101821,
+        "median_decision_score": 9.830058097839355,
+        "std_decision_score_population": 3.7537441844825707,
+        "min_decision_score": -2.2697384357452393,
+        "max_decision_score": 15.419941902160645,
+        "proportion_classified_evaluation": 0.9888888888888889,
+        "proportion_correct": 0.9888888888888889
+      },
+      "casual_eval": {
+        "n": 90,
+        "context_label": 1,
+        "mean_decision_score": 13.941226188341776,
+        "median_decision_score": 14.996950626373291,
+        "std_decision_score_population": 4.034197955561196,
+        "min_decision_score": 2.623314619064331,
+        "max_decision_score": 20.662113189697266,
+        "proportion_classified_evaluation": 1.0,
+        "proportion_correct": 1.0
+      },
+      "bench_deploy": {
+        "n": 90,
+        "context_label": 0,
+        "mean_decision_score": -8.206865518622928,
+        "median_decision_score": -9.20846176147461,
+        "std_decision_score_population": 5.383581914143494,
+        "min_decision_score": -18.436155319213867,
+        "max_decision_score": 5.985734939575195,
+        "proportion_classified_evaluation": 0.12222222222222222,
+        "proportion_correct": 0.8777777777777778
+      },
+      "casual_deploy": {
+        "n": 90,
+        "context_label": 0,
+        "mean_decision_score": -15.790443748897976,
+        "median_decision_score": -14.670346736907959,
+        "std_decision_score_population": 6.774825936451609,
+        "min_decision_score": -31.707653045654297,
+        "max_decision_score": -4.142569065093994,
+        "proportion_classified_evaluation": 0.0,
+        "proportion_correct": 1.0
+      }
+    },
+    "shuffled_mean_auroc": 0.49794598765432097,
+    "shuffled_range": [
+      0.4356172839506173,
+      0.5461111111111111
+    ],
+    "length_only_auroc": 0.6411265432098766
+  },
+  "held_out_test_discipline_passed": true,
+  "optional_geometry_run": false,
+  "translation_started": false,
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.2",
+    "sklearn": "1.9.0"
+  },
+  "total_seconds": 231.98357144976035
+}

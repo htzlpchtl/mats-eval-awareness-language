@@ -1,0 +1,315 @@
+{
+  "diagnostic": "source_provenance_and_cross_format",
+  "seed": 42,
+  "inputs": {
+    "dataset": "data/selected/english_selected_v2.jsonl",
+    "dataset_sha256": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+    "activations": "artifacts/activations/stage5_english_v2.npz",
+    "activation_sha256": "dbac459e5670ee9e61fa90c7e62f4e60ce305589b6d1c55ac2b041c7c90136f8",
+    "model_id": "Qwen/Qwen3.5-9B",
+    "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+  },
+  "implementation_leakage_audit": {
+    "frozen_cv_folds_used": true,
+    "cv_folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "examples_per_quadrant_per_validation_fold": 42,
+    "scaler_fit_only_on_each_fold_training_partition": true,
+    "probe_feature_input": "activation tensor slice only; no labels, IDs, quadrant, text, or metadata concatenated",
+    "train_test_ids_disjoint": true,
+    "probe_b_shuffled_label_mean_held_out_auroc": 0.49794598765432097,
+    "held_out_rows_used_by_new_diagnostics": 0
+  },
+  "tfidf_probe_b_training_cv": {
+    "mean_cv_auroc": 0.8956916099773242,
+    "std_cv_auroc_population": 0.0150245474382718,
+    "fold_aurocs": [
+      0.9209183673469389,
+      0.8942743764172335,
+      0.8884637188208616,
+      0.8996598639455783,
+      0.875141723356009
+    ],
+    "warnings": [],
+    "pipeline": {
+      "tfidf": "sklearn TfidfVectorizer defaults: lowercase word unigrams, no feature cap",
+      "classifier": "L2 LogisticRegression",
+      "C": 1.0,
+      "max_iter": 2000,
+      "random_state": 42
+    },
+    "fit_scope": "each vectorizer and classifier fit only on the corresponding four training folds",
+    "saved_csv_mean_cv_auroc": 0.8956916099773242,
+    "saved_csv_verified": true,
+    "rows": 840,
+    "folds": 5,
+    "held_out_test_rows_used": 0,
+    "output": "results/metrics/tfidf_probe_b_cv.csv"
+  },
+  "cross_format_transfer": {
+    "benchmark_to_casual": {
+      "direction": "benchmark_to_casual",
+      "source_format": "benchmark",
+      "target_format": "casual",
+      "source_training_rows": 420,
+      "target_evaluation_rows": 420,
+      "evaluation_partition": "train",
+      "held_out_test_rows_used": 0,
+      "source_quadrant_counts": {
+        "bench_deploy": 210,
+        "bench_eval": 210
+      },
+      "target_quadrant_counts": {
+        "casual_deploy": 210,
+        "casual_eval": 210
+      },
+      "fold_quadrant_counts": {
+        "fold_0:bench_deploy": 42,
+        "fold_0:bench_eval": 42,
+        "fold_1:bench_deploy": 42,
+        "fold_1:bench_eval": 42,
+        "fold_2:bench_deploy": 42,
+        "fold_2:bench_eval": 42,
+        "fold_3:bench_deploy": 42,
+        "fold_3:bench_eval": 42,
+        "fold_4:bench_deploy": 42,
+        "fold_4:bench_eval": 42
+      },
+      "layer_selection": {
+        "selected_layer_index": 12,
+        "selected_transformer_block_1_based": 13,
+        "mean_cv_auroc": 0.9904761904761905,
+        "std_cv_auroc_population": 0.0075155616413499216,
+        "fold_aurocs": [
+          0.9982993197278911,
+          0.9977324263038548,
+          0.9784580498866212,
+          0.985827664399093,
+          0.9920634920634921
+        ],
+        "selected_from_source_training_cv_only": true,
+        "saved_csv_argmax": {
+          "layer_index": 12,
+          "mean_cv_auroc": 0.9904761904761905
+        }
+      },
+      "transfer_evaluation": {
+        "evaluation": "benchmark_to_casual",
+        "n": 420,
+        "positives": 210,
+        "negatives": 210,
+        "auroc": 0.7986394557823128,
+        "accuracy": 0.5095238095238095,
+        "confusion_matrix": {
+          "labels": [
+            0,
+            1
+          ],
+          "matrix": [
+            [
+              204,
+              6
+            ],
+            [
+              200,
+              10
+            ]
+          ],
+          "tn": 204,
+          "fp": 6,
+          "fn": 200,
+          "tp": 10
+        },
+        "quadrants": {
+          "casual_eval": {
+            "n": 210,
+            "context_label": 1,
+            "mean_decision_score": -8.717196633702233,
+            "median_decision_score": -9.098614692687988,
+            "std_decision_score_population": 5.140779858184848,
+            "min_decision_score": -18.668630599975586,
+            "max_decision_score": 3.9834890365600586,
+            "proportion_classified_evaluation": 0.047619047619047616,
+            "proportion_correct": 0.047619047619047616
+          },
+          "casual_deploy": {
+            "n": 210,
+            "context_label": 0,
+            "mean_decision_score": -14.155019054526374,
+            "median_decision_score": -14.679579257965088,
+            "std_decision_score_population": 4.710083274630306,
+            "min_decision_score": -23.41628646850586,
+            "max_decision_score": 6.195330619812012,
+            "proportion_classified_evaluation": 0.02857142857142857,
+            "proportion_correct": 0.9714285714285714
+          }
+        },
+        "independent_csv_auroc": 0.7986394557823128
+      },
+      "pipeline": {
+        "steps": [
+          "scaler",
+          "classifier"
+        ],
+        "scaler": "StandardScaler",
+        "classifier": "LogisticRegression",
+        "regularization": "L2 via l1_ratio=0.0 under sklearn 1.9",
+        "C": 1.0,
+        "solver": "lbfgs",
+        "max_iter": 2000,
+        "random_state": 42,
+        "threshold": 0.5,
+        "class_weight": null
+      },
+      "final_fit_seconds": 0.05605565011501312,
+      "final_fit_warnings": [],
+      "cv_warnings": [],
+      "pipeline_path": "artifacts/probes/benchmark_to_casual.joblib",
+      "pipeline_sha256": "82a0b92a5195ba174abc3549ab6db8317396e0ca55ba6e9da7e18e979d675d23",
+      "outputs": {
+        "fold_metrics": "results/metrics/benchmark_to_casual_cv_folds.csv",
+        "layer_metrics": "results/metrics/benchmark_to_casual_layer_cv.csv",
+        "predictions": "results/predictions/benchmark_to_casual.csv"
+      }
+    },
+    "casual_to_benchmark": {
+      "direction": "casual_to_benchmark",
+      "source_format": "casual",
+      "target_format": "benchmark",
+      "source_training_rows": 420,
+      "target_evaluation_rows": 420,
+      "evaluation_partition": "train",
+      "held_out_test_rows_used": 0,
+      "source_quadrant_counts": {
+        "casual_deploy": 210,
+        "casual_eval": 210
+      },
+      "target_quadrant_counts": {
+        "bench_deploy": 210,
+        "bench_eval": 210
+      },
+      "fold_quadrant_counts": {
+        "fold_0:casual_deploy": 42,
+        "fold_0:casual_eval": 42,
+        "fold_1:casual_deploy": 42,
+        "fold_1:casual_eval": 42,
+        "fold_2:casual_deploy": 42,
+        "fold_2:casual_eval": 42,
+        "fold_3:casual_deploy": 42,
+        "fold_3:casual_eval": 42,
+        "fold_4:casual_deploy": 42,
+        "fold_4:casual_eval": 42
+      },
+      "layer_selection": {
+        "selected_layer_index": 0,
+        "selected_transformer_block_1_based": 1,
+        "mean_cv_auroc": 1.0,
+        "std_cv_auroc_population": 0.0,
+        "fold_aurocs": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "selected_from_source_training_cv_only": true,
+        "saved_csv_argmax": {
+          "layer_index": 0,
+          "mean_cv_auroc": 1.0
+        }
+      },
+      "transfer_evaluation": {
+        "evaluation": "casual_to_benchmark",
+        "n": 420,
+        "positives": 210,
+        "negatives": 210,
+        "auroc": 0.6571655328798185,
+        "accuracy": 0.5,
+        "confusion_matrix": {
+          "labels": [
+            0,
+            1
+          ],
+          "matrix": [
+            [
+              210,
+              0
+            ],
+            [
+              210,
+              0
+            ]
+          ],
+          "tn": 210,
+          "fp": 0,
+          "fn": 210,
+          "tp": 0
+        },
+        "quadrants": {
+          "bench_eval": {
+            "n": 210,
+            "context_label": 1,
+            "mean_decision_score": -31.521162432716007,
+            "median_decision_score": -31.2820987701416,
+            "std_decision_score_population": 5.493772394898042,
+            "min_decision_score": -48.004730224609375,
+            "max_decision_score": -17.484651565551758,
+            "proportion_classified_evaluation": 0.0,
+            "proportion_correct": 0.0
+          },
+          "bench_deploy": {
+            "n": 210,
+            "context_label": 0,
+            "mean_decision_score": -36.292895707629974,
+            "median_decision_score": -35.9605712890625,
+            "std_decision_score_population": 9.23739791400412,
+            "min_decision_score": -59.11693572998047,
+            "max_decision_score": -16.099767684936523,
+            "proportion_classified_evaluation": 0.0,
+            "proportion_correct": 1.0
+          }
+        },
+        "independent_csv_auroc": 0.6571655328798185
+      },
+      "pipeline": {
+        "steps": [
+          "scaler",
+          "classifier"
+        ],
+        "scaler": "StandardScaler",
+        "classifier": "LogisticRegression",
+        "regularization": "L2 via l1_ratio=0.0 under sklearn 1.9",
+        "C": 1.0,
+        "solver": "lbfgs",
+        "max_iter": 2000,
+        "random_state": 42,
+        "threshold": 0.5,
+        "class_weight": null
+      },
+      "final_fit_seconds": 0.0175038012675941,
+      "final_fit_warnings": [],
+      "cv_warnings": [],
+      "pipeline_path": "artifacts/probes/casual_to_benchmark.joblib",
+      "pipeline_sha256": "d57d784dcad4bde92571c4634ddd71da2b4fce70356da642546c75e1356fd219",
+      "outputs": {
+        "fold_metrics": "results/metrics/casual_to_benchmark_cv_folds.csv",
+        "layer_metrics": "results/metrics/casual_to_benchmark_layer_cv.csv",
+        "predictions": "results/predictions/casual_to_benchmark.csv"
+      }
+    },
+    "interpretation_scope": "Each direction selects and fits on one format's training rows and evaluates once on the other format's training rows; no held-out test rows are used."
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.2",
+    "sklearn": "1.9.0"
+  },
+  "total_seconds": 89.59300431190059,
+  "translation_started": false,
+  "optional_geometry_run": false
+}

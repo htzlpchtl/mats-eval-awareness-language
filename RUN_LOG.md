@@ -308,3 +308,81 @@ For each run include:
   The suite then passed 23 tests. After adding the serializer regression,
   the final suite passed 24 tests with warnings treated as errors.
 - No Probe A training or other Stage 6 work was started.
+## 2026-09-05 — Checkpoint 7 English Probe A and Probe B
+
+- Command: `HF_HOME=/workspace/.cache/huggingface HF_HUB_OFFLINE=1
+  .venv/bin/python -m src.run_english_probes --dataset
+  data/selected/english_selected_v2.jsonl --activations
+  artifacts/activations/stage5_english_v2.npz --dataset-sha256
+  4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639
+  --activation-sha256
+  dbac459e5670ee9e61fa90c7e62f4e60ce305589b6d1c55ac2b041c7c90136f8`.
+- Inputs were hash-checked and artifact row/layer metadata was verified before
+  use. Environment: Python 3.12.3, NumPy 2.5.2, scikit-learn 1.9.0. Seed 42.
+- Both probes used a `StandardScaler` plus L2 `LogisticRegression` pipeline
+  (`C=1.0`, `max_iter=2000`, `random_state=42`). A fresh whole pipeline was
+  fit inside each training fold. No convergence warnings occurred.
+- Probe A trained on 210 bench-eval and 210 casual-deploy training rows. All
+  32 layers had mean five-fold CV AUROC 1.0, so the fixed first-argmax rule
+  selected transformer block 1. Its held-out in-distribution AUROC/accuracy
+  were 1.0/1.0. Without refitting, its crossed-format AUROC was 0.0 and
+  accuracy was 0.03333333333333333.
+- Probe B used all 840 training rows with exactly 42 examples from every
+  quadrant in every validation fold. Block 32 was selected from training-only
+  CV: mean AUROC 0.9966836734693878; fold AUROCs 0.9987244897959184,
+  0.9995748299319729, 0.9912131519274376, 0.9953231292517006, and
+  0.9985827664399093.
+- The frozen final Probe B achieved held-out English AUROC
+  0.997283950617284 and accuracy 0.9666666666666667, with confusion matrix
+  `[[169, 11], [1, 179]]` in label order `[0, 1]`.
+- Held-out quadrant mean scores and correct proportions: bench-eval 9.283227
+  / 0.988889; casual-eval 13.941226 / 1.0; bench-deploy -8.206866 / 0.877778;
+  casual-deploy -15.790444 / 1.0.
+- Twenty deterministic shuffled-label fits (seeds 42–61) had mean held-out
+  AUROC 0.49794598765432097, population SD 0.03816746643560377, and range
+  0.4356172839506173–0.5461111111111111. The character-count plus Qwen-token-
+  count baseline had held-out AUROC 0.6411265432098766 and accuracy
+  0.6027777777777777.
+- The combined runner took 231.98357144976035 seconds. Probe A reporting time
+  was 26.295414465945214 seconds and Probe B reporting time was
+  127.27075225999579 seconds; these nested times exclude initial shared input
+  loading and some combined-run overhead.
+- Per-fold/layer metrics, every held-out prediction, all shuffled and length
+  predictions, fitted frozen pipelines, and three figures were saved. An
+  independent path recomputed layer argmaxes, AUROCs, ID coverage, and exact
+  fitted-pipeline scores from the activation artifact.
+
+## 2026-09-05 — Source-confounding diagnostics before multilingual decision
+
+- Command: `HF_HOME=/workspace/.cache/huggingface HF_HUB_OFFLINE=1
+  .venv/bin/python -m src.run_source_diagnostics --dataset
+  data/selected/english_selected_v2.jsonl --activations
+  artifacts/activations/stage5_english_v2.npz --dataset-sha256
+  4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639
+  --activation-sha256
+  dbac459e5670ee9e61fa90c7e62f4e60ce305589b6d1c55ac2b041c7c90136f8`.
+- The raw model-facing English text baseline used default word-unigram
+  `TfidfVectorizer` plus the fixed L2 logistic classifier. Both vectorizer and
+  classifier were fit separately inside every training fold. Fold AUROCs were
+  0.9209183673469389, 0.8942743764172335, 0.8884637188208616,
+  0.8996598639455783, and 0.875141723356009; mean 0.8956916099773242.
+- Benchmark-to-casual selected block 13 using only the 420 benchmark training
+  rows (mean CV AUROC 0.9904761904761905), then achieved AUROC
+  0.7986394557823128 on the 420 casual training rows. Fixed-threshold accuracy
+  was 0.5095238095238095 because almost all scores shifted below zero.
+- Casual-to-benchmark selected block 1 using only the 420 casual training rows
+  (mean CV AUROC 1.0), then achieved AUROC 0.6571655328798185 on the 420
+  benchmark training rows. Fixed-threshold accuracy was 0.5 because every
+  benchmark row scored below zero.
+- No held-out test rows were used by either new diagnostic. Independent saved-
+  file verification confirmed exact source/target ID sets, selected-layer
+  argmaxes, AUROCs, and pipeline decision scores. No convergence warnings
+  occurred. Diagnostic runtime was 89.59300431190059 seconds.
+- An initial ad hoc independent verifier incorrectly requested within-quadrant
+  AUROCs for single-class groups and compared Probe A scores under a different
+  matrix batch shape; it failed without changing results. The corrected path
+  uses quadrant score summaries and original evaluation groupings and passed.
+- Files: `results/metrics/english_go_no_go_summary.json`,
+  `results/metrics/ENGLISH_GO_NO_GO.md`, probe-specific JSON/CSV reports and
+  predictions, source-diagnostic JSON/CSVs, figures, and local fitted pipeline
+  artifacts. Translation and optional geometry were not started.

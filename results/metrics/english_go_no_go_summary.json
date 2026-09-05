@@ -1,0 +1,228 @@
+{
+  "checkpoint": "English Probe B scientific go/no-go with source-confounding diagnostics",
+  "status": "STOPPED_BEFORE_TRANSLATION",
+  "probe_a": {
+    "selected_block_1_based": 1,
+    "mean_training_cv_auroc": 1.0,
+    "in_distribution_auroc": 1.0,
+    "in_distribution_accuracy": 1.0,
+    "crossed_format_auroc": 0.0,
+    "crossed_format_accuracy": 0.03333333333333333
+  },
+  "probe_b": {
+    "selected_block_1_based": 32,
+    "mean_training_cv_auroc": 0.9966836734693878,
+    "training_cv_fold_aurocs": [
+      0.9987244897959184,
+      0.9995748299319729,
+      0.9912131519274376,
+      0.9953231292517006,
+      0.9985827664399093
+    ],
+    "held_out_auroc": 0.997283950617284,
+    "held_out_accuracy": 0.9666666666666667,
+    "confusion_matrix": {
+      "labels": [
+        0,
+        1
+      ],
+      "matrix": [
+        [
+          169,
+          11
+        ],
+        [
+          1,
+          179
+        ]
+      ],
+      "tn": 169,
+      "fp": 11,
+      "fn": 1,
+      "tp": 179
+    },
+    "quadrants": {
+      "bench_eval": {
+        "n": 90,
+        "context_label": 1,
+        "mean_decision_score": 9.283227131101821,
+        "median_decision_score": 9.830058097839355,
+        "std_decision_score_population": 3.7537441844825707,
+        "min_decision_score": -2.2697384357452393,
+        "max_decision_score": 15.419941902160645,
+        "proportion_classified_evaluation": 0.9888888888888889,
+        "proportion_correct": 0.9888888888888889
+      },
+      "casual_eval": {
+        "n": 90,
+        "context_label": 1,
+        "mean_decision_score": 13.941226188341776,
+        "median_decision_score": 14.996950626373291,
+        "std_decision_score_population": 4.034197955561196,
+        "min_decision_score": 2.623314619064331,
+        "max_decision_score": 20.662113189697266,
+        "proportion_classified_evaluation": 1.0,
+        "proportion_correct": 1.0
+      },
+      "bench_deploy": {
+        "n": 90,
+        "context_label": 0,
+        "mean_decision_score": -8.206865518622928,
+        "median_decision_score": -9.20846176147461,
+        "std_decision_score_population": 5.383581914143494,
+        "min_decision_score": -18.436155319213867,
+        "max_decision_score": 5.985734939575195,
+        "proportion_classified_evaluation": 0.12222222222222222,
+        "proportion_correct": 0.8777777777777778
+      },
+      "casual_deploy": {
+        "n": 90,
+        "context_label": 0,
+        "mean_decision_score": -15.790443748897976,
+        "median_decision_score": -14.670346736907959,
+        "std_decision_score_population": 6.774825936451609,
+        "min_decision_score": -31.707653045654297,
+        "max_decision_score": -4.142569065093994,
+        "proportion_classified_evaluation": 0.0,
+        "proportion_correct": 1.0
+      }
+    },
+    "shuffled_label_mean_auroc": 0.49794598765432097,
+    "shuffled_label_std_auroc": 0.03816746643560377,
+    "shuffled_label_range": [
+      0.4356172839506173,
+      0.5461111111111111
+    ],
+    "length_only_auroc": 0.6411265432098766
+  },
+  "source_confounding_diagnostics": {
+    "tfidf_mean_training_cv_auroc": 0.8956916099773242,
+    "tfidf_std_training_cv_auroc": 0.0150245474382718,
+    "tfidf_fold_aurocs": [
+      0.9209183673469389,
+      0.8942743764172335,
+      0.8884637188208616,
+      0.8996598639455783,
+      0.875141723356009
+    ],
+    "benchmark_to_casual": {
+      "selected_block_1_based": 13,
+      "source_mean_cv_auroc": 0.9904761904761905,
+      "target_training_partition_auroc": 0.7986394557823128,
+      "target_training_partition_accuracy": 0.5095238095238095,
+      "quadrants": {
+        "casual_eval": {
+          "n": 210,
+          "context_label": 1,
+          "mean_decision_score": -8.717196633702233,
+          "median_decision_score": -9.098614692687988,
+          "std_decision_score_population": 5.140779858184848,
+          "min_decision_score": -18.668630599975586,
+          "max_decision_score": 3.9834890365600586,
+          "proportion_classified_evaluation": 0.047619047619047616,
+          "proportion_correct": 0.047619047619047616
+        },
+        "casual_deploy": {
+          "n": 210,
+          "context_label": 0,
+          "mean_decision_score": -14.155019054526374,
+          "median_decision_score": -14.679579257965088,
+          "std_decision_score_population": 4.710083274630306,
+          "min_decision_score": -23.41628646850586,
+          "max_decision_score": 6.195330619812012,
+          "proportion_classified_evaluation": 0.02857142857142857,
+          "proportion_correct": 0.9714285714285714
+        }
+      }
+    },
+    "casual_to_benchmark": {
+      "selected_block_1_based": 1,
+      "source_mean_cv_auroc": 1.0,
+      "target_training_partition_auroc": 0.6571655328798185,
+      "target_training_partition_accuracy": 0.5,
+      "quadrants": {
+        "bench_eval": {
+          "n": 210,
+          "context_label": 1,
+          "mean_decision_score": -31.521162432716007,
+          "median_decision_score": -31.2820987701416,
+          "std_decision_score_population": 5.493772394898042,
+          "min_decision_score": -48.004730224609375,
+          "max_decision_score": -17.484651565551758,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 0.0
+        },
+        "bench_deploy": {
+          "n": 210,
+          "context_label": 0,
+          "mean_decision_score": -36.292895707629974,
+          "median_decision_score": -35.9605712890625,
+          "std_decision_score_population": 9.23739791400412,
+          "min_decision_score": -59.11693572998047,
+          "max_decision_score": -16.099767684936523,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 1.0
+        }
+      }
+    },
+    "held_out_test_rows_used": 0
+  },
+  "implementation_leakage_checks": {
+    "frozen_cv_folds_used": true,
+    "cv_folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "examples_per_quadrant_per_validation_fold": 42,
+    "scaler_fit_only_on_each_fold_training_partition": true,
+    "probe_feature_input": "activation tensor slice only; no labels, IDs, quadrant, text, or metadata concatenated",
+    "train_test_ids_disjoint": true,
+    "probe_b_shuffled_label_mean_held_out_auroc": 0.49794598765432097,
+    "held_out_rows_used_by_new_diagnostics": 0,
+    "independent_probe_verification": {
+      "all_prediction_id_sets_exact": true,
+      "train_test_overlap_zero": true,
+      "saved_pipeline_scores_exact": {
+        "A": {
+          "original_evaluation_grouping_exact": true,
+          "max_abs_difference": 0.0,
+          "training_ids_all_from_train_split": true
+        },
+        "B": {
+          "original_evaluation_grouping_exact": true,
+          "max_abs_difference": 0.0,
+          "training_ids_all_from_train_split": true
+        }
+      },
+      "csv_layer_argmax_recomputed": true,
+      "csv_aurocs_recomputed": true,
+      "probe_features": "activation arrays only; verified by code path and array shapes"
+    },
+    "independent_diagnostic_verification": {
+      "source_target_ids_exact": true,
+      "held_out_ids_used": 0,
+      "saved_layer_argmaxes_recomputed": true,
+      "saved_transfer_aurocs_recomputed": true,
+      "saved_pipeline_scores_exact": true
+    },
+    "all_checks_passed": true
+  },
+  "scientific_assessment": [
+    "The shuffled-label result and independent pipeline/ID audits provide evidence against an implementation leak.",
+    "The TF-IDF result shows that simple surface/source lexical information strongly predicts the labels, so Probe B cannot be interpreted as a source-invariant evaluation/deployment signal.",
+    "Above-chance cross-format rank transfer suggests the activation directions are not exclusively format classifiers, but transfer is asymmetric and fixed-threshold calibration shifts severely across formats.",
+    "A multilingual continuation could measure language invariance of this methodology-derived, source-confounded signal, but would not isolate evaluation awareness from dataset provenance."
+  ],
+  "optional_geometry_run": false,
+  "translation_started": false,
+  "primary_files": {
+    "probe_a": "results/metrics/probe_a_summary.json",
+    "probe_b": "results/metrics/probe_b_summary.json",
+    "diagnostics": "results/metrics/source_confounding_diagnostics.json",
+    "probe_verification": "results/metrics/english_probe_independent_verification.json",
+    "diagnostic_verification": "results/metrics/source_diagnostics_independent_verification.json"
+  }
+}
