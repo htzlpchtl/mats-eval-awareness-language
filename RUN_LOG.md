@@ -231,3 +231,80 @@ For each run include:
   use it.
 - Warning: Hugging Face Hub access was unauthenticated. No Stage 5 extraction
   or full-dataset activation extraction was run.
+
+## 2026-09-05 — Checkpoint 5 full English activation extraction
+
+- Extraction command: HF_HOME=/workspace/.cache/huggingface
+  .venv/bin/python -m src.extract_activations --config config.yaml --dataset
+  data/selected/english_selected_v2.jsonl --dataset-sha256
+  4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639
+  --model Qwen/Qwen3.5-9B --revision
+  c202236235762e1c871ad0ccb60c8ee5ba337b9a.
+- Recovery-audit command: HF_HOME=/workspace/.cache/huggingface
+  .venv/bin/python -m src.audit_stage5_artifact --dataset
+  data/selected/english_selected_v2.jsonl --dataset-sha256
+  4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639
+  --artifact artifacts/activations/stage5_english_v2.npz --manifest
+  results/metrics/stage5_english_manifest.json --report
+  results/metrics/stage5_summary.json --observed-live-device-memory-mib
+  17846.
+- Seed: 42. Language: English. Frozen input:
+  data/selected/english_selected_v2.jsonl; SHA-256 was verified before the
+  preflight, immediately before the full extraction, after extraction, and
+  during recovery as
+  4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639.
+  The frozen file was not modified or resampled.
+- Model: Qwen/Qwen3.5-9B; requested and resolved revision
+  c202236235762e1c871ad0ccb60c8ee5ba337b9a; loaded class
+  Qwen3_5ForCausalLM; BF16 on the NVIDIA A40; 32 blocks; hidden size 4096.
+- The required 40-row preflight used 10 evenly spaced manifest positions per
+  quadrant. Its (40, 32, 4096) shape, hook coverage, final-token indexing,
+  and finite-value assertions passed before the full run began.
+- Full extraction processed the frozen manifest once: 1,200 prompts in 300
+  consecutive-row batches of four, with dynamic right padding, no truncation,
+  no generation, and all 32 raw block outputs captured by forward hooks.
+  Activations were selected at the rightmost non-padding token and stored as
+  CPU float32.
+- Qwen input-token lengths over all 1,200 prompts: minimum 18, median 54,
+  95th percentile 107, maximum 359. Zero exceeded the checked 262,144-token
+  model limit.
+- Four ignored recovery checkpoints were written and reloaded, one per
+  contiguous 300-row quadrant:
+  artifacts/activations/stage5_english_01_bench_deploy.npz
+  (038cbed29f42fcb9bb269737458d3bdcfd9e23444dbe115741e16a54d92fad0a),
+  stage5_english_02_bench_eval.npz
+  (8c2febe10a57d492653ef28fabc1ba02d771306faaab0cad93b2538a07e7cf20),
+  stage5_english_03_casual_deploy.npz
+  (3cc22d17b478d5e76dc916bd67f1b827aeeee41a32322826c58ec739b0f99895),
+  and stage5_english_04_casual_eval.npz
+  (3629a2659c203825b742782b9b8124cd4928b56d0d8575ecc7706b5c5984c4fa).
+- Final ignored artifact:
+  artifacts/activations/stage5_english_v2.npz; shape (1200, 32, 4096);
+  float32; 292,374,412 bytes; SHA-256
+  dbac459e5670ee9e61fa90c7e62f4e60ce305589b6d1c55ac2b041c7c90136f8.
+  It embeds global row indices, stable IDs, quadrants, splits, CV folds,
+  context and format labels, pair IDs, one-based layer numbers, zero-based
+  module indices, and raw-hook source strings.
+- Independent recovery audit verified every metadata array against frozen
+  JSONL order, every manifest row and all 32 layer mappings, all-finite
+  values, and exact equality between every quadrant checkpoint activation
+  array and its final-artifact slice.
+- Tracked files written: results/metrics/stage5_english_manifest.json and
+  results/metrics/stage5_summary.json.
+- Implementation issue: the extraction process completed final artifact
+  save/reload verification and wrote the manifest, then exited while
+  serialising the summary because set-valued Transformers loading metadata
+  lacked the Stage 4 JSON fallback. The extractor now uses a tested set- and
+  NumPy-aware serializer. The full extraction was intentionally not rerun.
+- Because the summary failure occurred before telemetry was persisted, exact
+  Stage 5 extraction runtime, prompts/second, and PyTorch peak VRAM are
+  unavailable. During the live run, nvidia-smi observed 17,846 MiB used by
+  the process. Same-policy Stage 4 peak allocated memory was 17,427.632 MiB.
+  Second-resolution file intervals retained in the recovery report are not
+  presented as exact extraction timing.
+- Warning: Hugging Face Hub access was unauthenticated.
+- Test history: the first post-implementation run had one overly specific
+  test error-message match fail and 22 tests pass; the test was corrected.
+  The suite then passed 23 tests. After adding the serializer regression,
+  the final suite passed 24 tests with warnings treated as errors.
+- No Probe A training or other Stage 6 work was started.

@@ -1,0 +1,454 @@
+{
+  "stage": 5,
+  "checkpoint": 5,
+  "language": "english",
+  "report_status": "recovered_after_summary_serialization_failure",
+  "dataset": {
+    "path": "data/selected/english_selected_v2.jsonl",
+    "expected_sha256": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+    "sha256_after_recovery_audit": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+    "rows": 1200,
+    "modified": false
+  },
+  "model": {
+    "id": "Qwen/Qwen3.5-9B",
+    "requested_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "resolved_revision_verified_before_original_run": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "loaded_class_verified_before_original_run": "Qwen3_5ForCausalLM",
+    "language_model_blocks": 32,
+    "hidden_size": 4096,
+    "dtype": "bfloat16"
+  },
+  "policy": {
+    "batch_size": 4,
+    "batch_order": "frozen_manifest_order",
+    "batch_membership": "consecutive_rows",
+    "padding": "dynamic",
+    "padding_side": "right",
+    "truncation": false,
+    "final_token_selection": "rightmost_nonzero_attention_mask",
+    "activation_mapping": "raw_outputs_all_32_decoder_blocks_via_forward_hooks",
+    "storage_dtype": "float32",
+    "languages": [
+      "english",
+      "spanish",
+      "japanese"
+    ],
+    "same_extraction_path_all_languages": true
+  },
+  "forward": {
+    "inference_mode": true,
+    "generated_answers": false,
+    "output_hidden_states": true,
+    "use_cache": false,
+    "return_dict": true,
+    "logits_to_keep": 1,
+    "chat_messages": "one user message and no system message",
+    "add_generation_prompt": true
+  },
+  "token_lengths": {
+    "min": 18,
+    "median": 54.0,
+    "p95": 107.0,
+    "max": 359,
+    "checked_model_limit": 262144,
+    "number_exceeding_checked_model_limit": 0,
+    "truncation": false
+  },
+  "preflight_40": {
+    "rows": 40,
+    "quadrant_counts": {
+      "bench_deploy": 10,
+      "bench_eval": 10,
+      "casual_deploy": 10,
+      "casual_eval": 10
+    },
+    "selection": "10 evenly spaced manifest positions per quadrant",
+    "completed_before_full_extraction": true,
+    "exact_shape_and_finite_assertions_passed_in_original_process": true
+  },
+  "full_extraction": {
+    "rows": 1200,
+    "batches": 300,
+    "batch_size": 4,
+    "quadrant_counts": {
+      "bench_deploy": 300,
+      "bench_eval": 300,
+      "casual_deploy": 300,
+      "casual_eval": 300
+    },
+    "activation_shape": [
+      1200,
+      32,
+      4096
+    ],
+    "all_values_finite": true,
+    "full_extraction_seconds": null,
+    "prompts_per_second": null
+  },
+  "quadrants": [
+    {
+      "segment_index": 1,
+      "quadrant": "bench_deploy",
+      "rows": 300,
+      "source_row_start": 0,
+      "source_row_stop_exclusive": 300,
+      "checkpoint_path": "artifacts/activations/stage5_english_01_bench_deploy.npz",
+      "checkpoint_sha256": "038cbed29f42fcb9bb269737458d3bdcfd9e23444dbe115741e16a54d92fad0a",
+      "checkpoint_size_bytes": 73078469,
+      "checkpoint_mtime_utc": "2026-09-05T00:53:51+00:00",
+      "checkpoint_reload": {
+        "shape": [
+          300,
+          32,
+          4096
+        ],
+        "dtype": "float32",
+        "metadata_exact": true,
+        "values_exact": null,
+        "all_finite": true
+      },
+      "values_exactly_match_final_artifact": true
+    },
+    {
+      "segment_index": 2,
+      "quadrant": "bench_eval",
+      "rows": 300,
+      "source_row_start": 300,
+      "source_row_stop_exclusive": 600,
+      "checkpoint_path": "artifacts/activations/stage5_english_02_bench_eval.npz",
+      "checkpoint_sha256": "8c2febe10a57d492653ef28fabc1ba02d771306faaab0cad93b2538a07e7cf20",
+      "checkpoint_size_bytes": 73064020,
+      "checkpoint_mtime_utc": "2026-09-05T00:54:35+00:00",
+      "checkpoint_reload": {
+        "shape": [
+          300,
+          32,
+          4096
+        ],
+        "dtype": "float32",
+        "metadata_exact": true,
+        "values_exact": null,
+        "all_finite": true
+      },
+      "values_exactly_match_final_artifact": true
+    },
+    {
+      "segment_index": 3,
+      "quadrant": "casual_deploy",
+      "rows": 300,
+      "source_row_start": 600,
+      "source_row_stop_exclusive": 900,
+      "checkpoint_path": "artifacts/activations/stage5_english_03_casual_deploy.npz",
+      "checkpoint_sha256": "3cc22d17b478d5e76dc916bd67f1b827aeeee41a32322826c58ec739b0f99895",
+      "checkpoint_size_bytes": 73117998,
+      "checkpoint_mtime_utc": "2026-09-05T00:55:16+00:00",
+      "checkpoint_reload": {
+        "shape": [
+          300,
+          32,
+          4096
+        ],
+        "dtype": "float32",
+        "metadata_exact": true,
+        "values_exact": null,
+        "all_finite": true
+      },
+      "values_exactly_match_final_artifact": true
+    },
+    {
+      "segment_index": 4,
+      "quadrant": "casual_eval",
+      "rows": 300,
+      "source_row_start": 900,
+      "source_row_stop_exclusive": 1200,
+      "checkpoint_path": "artifacts/activations/stage5_english_04_casual_eval.npz",
+      "checkpoint_sha256": "3629a2659c203825b742782b9b8124cd4928b56d0d8575ecc7706b5c5984c4fa",
+      "checkpoint_size_bytes": 73123385,
+      "checkpoint_mtime_utc": "2026-09-05T00:55:57+00:00",
+      "checkpoint_reload": {
+        "shape": [
+          300,
+          32,
+          4096
+        ],
+        "dtype": "float32",
+        "metadata_exact": true,
+        "values_exact": null,
+        "all_finite": true
+      },
+      "values_exactly_match_final_artifact": true
+    }
+  ],
+  "layer_mapping": [
+    {
+      "stored_index": 0,
+      "transformer_block_1_based": 1,
+      "module": "model.model.layers[0]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 1,
+      "transformer_block_1_based": 2,
+      "module": "model.model.layers[1]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 2,
+      "transformer_block_1_based": 3,
+      "module": "model.model.layers[2]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 3,
+      "transformer_block_1_based": 4,
+      "module": "model.model.layers[3]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 4,
+      "transformer_block_1_based": 5,
+      "module": "model.model.layers[4]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 5,
+      "transformer_block_1_based": 6,
+      "module": "model.model.layers[5]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 6,
+      "transformer_block_1_based": 7,
+      "module": "model.model.layers[6]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 7,
+      "transformer_block_1_based": 8,
+      "module": "model.model.layers[7]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 8,
+      "transformer_block_1_based": 9,
+      "module": "model.model.layers[8]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 9,
+      "transformer_block_1_based": 10,
+      "module": "model.model.layers[9]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 10,
+      "transformer_block_1_based": 11,
+      "module": "model.model.layers[10]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 11,
+      "transformer_block_1_based": 12,
+      "module": "model.model.layers[11]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 12,
+      "transformer_block_1_based": 13,
+      "module": "model.model.layers[12]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 13,
+      "transformer_block_1_based": 14,
+      "module": "model.model.layers[13]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 14,
+      "transformer_block_1_based": 15,
+      "module": "model.model.layers[14]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 15,
+      "transformer_block_1_based": 16,
+      "module": "model.model.layers[15]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 16,
+      "transformer_block_1_based": 17,
+      "module": "model.model.layers[16]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 17,
+      "transformer_block_1_based": 18,
+      "module": "model.model.layers[17]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 18,
+      "transformer_block_1_based": 19,
+      "module": "model.model.layers[18]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 19,
+      "transformer_block_1_based": 20,
+      "module": "model.model.layers[19]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 20,
+      "transformer_block_1_based": 21,
+      "module": "model.model.layers[20]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 21,
+      "transformer_block_1_based": 22,
+      "module": "model.model.layers[21]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 22,
+      "transformer_block_1_based": 23,
+      "module": "model.model.layers[22]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 23,
+      "transformer_block_1_based": 24,
+      "module": "model.model.layers[23]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 24,
+      "transformer_block_1_based": 25,
+      "module": "model.model.layers[24]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 25,
+      "transformer_block_1_based": 26,
+      "module": "model.model.layers[25]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 26,
+      "transformer_block_1_based": 27,
+      "module": "model.model.layers[26]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 27,
+      "transformer_block_1_based": 28,
+      "module": "model.model.layers[27]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 28,
+      "transformer_block_1_based": 29,
+      "module": "model.model.layers[28]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 29,
+      "transformer_block_1_based": 30,
+      "module": "model.model.layers[29]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 30,
+      "transformer_block_1_based": 31,
+      "module": "model.model.layers[30]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    },
+    {
+      "stored_index": 31,
+      "transformer_block_1_based": 32,
+      "module": "model.model.layers[31]",
+      "source": "raw forward-hook output at final rightmost non-padding token"
+    }
+  ],
+  "artifact": {
+    "path": "artifacts/activations/stage5_english_v2.npz",
+    "sha256": "dbac459e5670ee9e61fa90c7e62f4e60ce305589b6d1c55ac2b041c7c90136f8",
+    "size_bytes": 292374412,
+    "mtime_utc": "2026-09-05T00:57:45+00:00",
+    "shape": [
+      1200,
+      32,
+      4096
+    ],
+    "dtype": "float32",
+    "reload_checks": {
+      "shape": [
+        1200,
+        32,
+        4096
+      ],
+      "dtype": "float32",
+      "metadata_exact": true,
+      "values_exact": null,
+      "all_finite": true
+    },
+    "quadrant_checkpoints_exactly_match": true,
+    "manifest_path": "results/metrics/stage5_english_manifest.json",
+    "manifest_sha256": "96745eed17d3600703e8afbbe7d95aa06aa2013f0ef094140b554a7477b77fe5",
+    "manifest_checks": {
+      "artifact_path_exact": true,
+      "artifact_sha256_exact": true,
+      "artifact_shape_exact": true,
+      "dataset_path_exact": true,
+      "dataset_sha256_exact": true,
+      "layer_mapping_exact": true,
+      "row_mapping_exact": true
+    }
+  },
+  "runtime": {
+    "exact_extraction_runtime_available": false,
+    "exact_prompts_per_second_available": false,
+    "reason": "The original process completed extraction and artifact verification, then failed serializing set-valued model loading metadata before writing its summary. The full extraction was intentionally not rerun.",
+    "recovered_second_resolution_file_intervals": {
+      "checkpoint_1_to_2_seconds": 44.0,
+      "checkpoint_2_to_3_seconds": 41.0,
+      "checkpoint_3_to_4_seconds": 41.0,
+      "checkpoint_4_to_final_artifact_seconds": 108.0,
+      "final_artifact_to_manifest_seconds": 4.0
+    },
+    "recovery_audit_seconds": 13.053104140330106
+  },
+  "gpu_memory": {
+    "exact_torch_peak_available": false,
+    "reason": "Peak telemetry was lost with the original in-memory summary.",
+    "observed_live_nvidia_smi_process_memory_mib": 17846.0,
+    "stage4_same_policy_peak_allocated_mib": 17427.6318359375
+  },
+  "checks": {
+    "exactly_1200_rows": true,
+    "activation_shape_exact": true,
+    "all_values_finite": true,
+    "stable_ids_and_order_exact": true,
+    "quadrants_and_splits_exact": true,
+    "layer_numbering_explicit_and_correct": true,
+    "quadrant_checkpoints_exactly_match_final": true,
+    "dataset_unchanged": true,
+    "stage6_started": false
+  },
+  "implementation_issues": [
+    {
+      "issue": "The original final JSON serialization omitted the Stage 4 set-aware JSON fallback.",
+      "impact": "Activation artifacts and manifest were already fully written and verified; exact runtime, prompts/sec, and torch peak telemetry were not persisted.",
+      "fix": "The extractor now uses a tested set- and NumPy-aware JSON serializer. No activation extraction was rerun."
+    }
+  ],
+  "warnings": [
+    "Hugging Face Hub access was unauthenticated.",
+    "Exact Stage 5 runtime, prompts/sec, and torch peak VRAM are unavailable because of the reporting-only failure."
+  ],
+  "stage6_started": false
+}
