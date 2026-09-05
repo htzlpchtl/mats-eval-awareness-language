@@ -220,7 +220,29 @@
         "std_paired_decision_score_delta_population": 9.352324354718364,
         "mean_delta_context_eval": -15.149573019478057,
         "mean_delta_context_deploy": 0.9114804877175225,
-        "paired_score_pearson_r": 0.7722393561648644
+        "paired_score_pearson_r": 0.7722393561648644,
+        "quadrants": {
+          "bench_eval": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": -14.098305156495837,
+            "std_paired_decision_score_delta_population": 5.933570458427394
+          },
+          "casual_eval": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": -16.200840882460277,
+            "std_paired_decision_score_delta_population": 3.625196933718201
+          },
+          "bench_deploy": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": 1.307466083102756,
+            "std_paired_decision_score_delta_population": 5.071057347391146
+          },
+          "casual_deploy": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": 0.515494892332289,
+            "std_paired_decision_score_delta_population": 3.9137670275015486
+          }
+        }
       }
     },
     "EN->JA": {
@@ -322,7 +344,29 @@
         "std_paired_decision_score_delta_population": 9.712246405342423,
         "mean_delta_context_eval": -19.668064002195994,
         "mean_delta_context_deploy": -2.2697322368621826,
-        "paired_score_pearson_r": 0.7569247141709251
+        "paired_score_pearson_r": 0.7569247141709251,
+        "quadrants": {
+          "bench_eval": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": -18.465253631273907,
+            "std_paired_decision_score_delta_population": 3.938013217154614
+          },
+          "casual_eval": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": -20.87087437311808,
+            "std_paired_decision_score_delta_population": 3.606262839309821
+          },
+          "bench_deploy": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": -2.207883165942298,
+            "std_paired_decision_score_delta_population": 5.236617597068145
+          },
+          "casual_deploy": {
+            "n": 90,
+            "mean_paired_decision_score_delta_vs_english": -2.3315813077820673,
+            "std_paired_decision_score_delta_population": 3.9714698691021098
+          }
+        }
       }
     }
   },
@@ -332,5 +376,10 @@
     "EN->JA": 0.8642592592592593
   },
   "predictions_path": "results/metrics/stage9_multilingual_predictions.csv",
-  "predictions_sha256": "e49144460049f17059c4c9917775bdc3d76c37f848852460a22f146b58659a4e"
+  "predictions_sha256": "e49144460049f17059c4c9917775bdc3d76c37f848852460a22f146b58659a4e",
+  "paired_shift_update": {
+    "computed_from_saved_predictions_only": true,
+    "transformer_inference_run": false,
+    "predictions_sha256": "e49144460049f17059c4c9917775bdc3d76c37f848852460a22f146b58659a4e"
+  }
 }

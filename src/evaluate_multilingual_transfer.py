@@ -86,16 +86,31 @@ def evaluate_language(pipeline: Any, activations: np.ndarray, rows: list[dict[st
     return metrics, output
 
 
-def paired_shift(english: list[dict[str, Any]], target: list[dict[str, Any]]) -> dict[str, float]:
+def paired_shift(english: list[dict[str, Any]], target: list[dict[str, Any]]) -> dict[str, Any]:
     en = {row["stable_id"]: row for row in english}
     other = {row["stable_id"]: row for row in target}
     if en.keys() != other.keys():
         raise RuntimeError("Paired language prediction IDs differ")
     ids = [row["stable_id"] for row in english]
-    delta = np.asarray([other[key]["decision_score"] - en[key]["decision_score"] for key in ids])
-    labels = np.asarray([en[key]["context_label"] for key in ids])
-    en_scores = np.asarray([en[key]["decision_score"] for key in ids])
-    target_scores = np.asarray([other[key]["decision_score"] for key in ids])
+    if any(en[key]["quadrant"] != other[key]["quadrant"] for key in ids):
+        raise RuntimeError("Paired language prediction quadrants differ")
+    delta = np.asarray([
+        float(other[key]["decision_score"]) - float(en[key]["decision_score"])
+        for key in ids
+    ])
+    labels = np.asarray([int(en[key]["context_label"]) for key in ids])
+    en_scores = np.asarray([float(en[key]["decision_score"]) for key in ids])
+    target_scores = np.asarray([float(other[key]["decision_score"]) for key in ids])
+    quadrant_shifts = {}
+    for quadrant in QUADRANT_ORDER:
+        mask = np.asarray([en[key]["quadrant"] == quadrant for key in ids])
+        if int(mask.sum()) != 90:
+            raise RuntimeError(f"Expected 90 paired rows for {quadrant}")
+        quadrant_shifts[quadrant] = {
+            "n": int(mask.sum()),
+            "mean_paired_decision_score_delta_vs_english": float(delta[mask].mean()),
+            "std_paired_decision_score_delta_population": float(delta[mask].std(ddof=0)),
+        }
     return {
         "mean_paired_decision_score_delta_vs_english": float(delta.mean()),
         "median_paired_decision_score_delta_vs_english": float(np.median(delta)),
@@ -103,6 +118,7 @@ def paired_shift(english: list[dict[str, Any]], target: list[dict[str, Any]]) ->
         "mean_delta_context_eval": float(delta[labels == 1].mean()),
         "mean_delta_context_deploy": float(delta[labels == 0].mean()),
         "paired_score_pearson_r": float(np.corrcoef(en_scores, target_scores)[0, 1]),
+        "quadrants": quadrant_shifts,
     }
 
 
@@ -127,6 +143,11 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         for quadrant in QUADRANT_ORDER:
             item = report["evaluations"][name]["quadrants"][quadrant]
             lines.append(f"| {quadrant} | {item['n']} | {item['mean_decision_score']:.6f} | {item['median_decision_score']:.6f} | {item['std_decision_score_population']:.6f} | {item['proportion_classified_evaluation']:.6f} | {item['proportion_correct']:.6f} |")
+    lines += ["", "## Paired decision-score shifts versus English", "", "A shift is the target-language score minus the English score for the same stable ID. SD is the population SD over the 90 paired examples in each quadrant.", "", "| Transfer | Quadrant | n | Mean shift | SD of shift |", "|---|---|---:|---:|---:|"]
+    for name in ("EN->ES", "EN->JA"):
+        for quadrant in QUADRANT_ORDER:
+            item = report["evaluations"][name]["score_shift_vs_EN->EN"]["quadrants"][quadrant]
+            lines.append(f"| {name} | {quadrant} | {item['n']} | {item['mean_paired_decision_score_delta_vs_english']:.6f} | {item['std_paired_decision_score_delta_population']:.6f} |")
     path.parent.mkdir(parents=True, exist_ok=True); path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -138,7 +159,36 @@ def main() -> None:
     parser.add_argument("--predictions", type=Path, default=Path("results/metrics/stage9_multilingual_predictions.csv"))
     parser.add_argument("--report", type=Path, default=Path("results/metrics/stage9_transfer.json"))
     parser.add_argument("--markdown", type=Path, default=Path("results/metrics/STAGE9_TRANSFER.md"))
+    parser.add_argument(
+        "--saved-predictions-only",
+        action="store_true",
+        help="Update paired-shift summaries from the saved prediction CSV without loading activations or applying the probe.",
+    )
     args = parser.parse_args()
+    if args.saved_predictions_only:
+        report = json.loads(args.report.read_text(encoding="utf-8"))
+        with args.predictions.open(encoding="utf-8", newline="") as handle:
+            saved_predictions = list(csv.DictReader(handle))
+        by_language = {
+            language: [row for row in saved_predictions if row["language"] == language]
+            for language in NAMES
+        }
+        for language in ("spanish", "japanese"):
+            report["evaluations"][NAMES[language]]["score_shift_vs_EN->EN"] = paired_shift(
+                by_language["english"], by_language[language]
+            )
+        report["paired_shift_update"] = {
+            "computed_from_saved_predictions_only": True,
+            "transformer_inference_run": False,
+            "predictions_sha256": sha256_file(args.predictions),
+        }
+        args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        write_markdown(args.markdown, report)
+        print(json.dumps({
+            name: report["evaluations"][name]["score_shift_vs_EN->EN"]["quadrants"]
+            for name in ("EN->ES", "EN->JA")
+        }, indent=2))
+        return
     if sha256_file(args.probe) != PROBE_SHA256:
         raise RuntimeError("Frozen English Probe B artifact hash mismatch")
     saved = joblib.load(args.probe); pipeline = saved["pipeline"]; metadata = saved["metadata"]

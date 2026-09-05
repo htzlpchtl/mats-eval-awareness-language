@@ -425,3 +425,37 @@ For each run include:
 - Interpretation remains explicitly source-confounded, not clean evaluation
   awareness. The multilingual result preserves substantial rank information
   but has severe language-dependent score/calibration shifts.
+- From the saved prediction CSV only (no transformer inference), paired target-
+  minus-English block-32 score shifts, reported as mean / population SD over
+  90 stable-ID-aligned examples per quadrant, were: EN-to-ES bench-eval
+  -14.098305 / 5.933570, casual-eval -16.200841 / 3.625197, bench-deploy
+  +1.307466 / 5.071057, and casual-deploy +0.515495 / 3.913767; EN-to-JA
+  bench-eval -18.465254 / 3.938013, casual-eval -20.870874 / 3.606263,
+  bench-deploy -2.207883 / 5.236618, and casual-deploy -2.331581 / 3.971470.
+
+## 2026-09-05 - TF-IDF v2 selection-sensitivity diagnostic
+
+- Reproduced the frozen-v2 training-only five-fold TF-IDF plus L2 logistic-
+  regression mean CV AUROC exactly: 0.895692 (folds 0.920918, 0.894274,
+  0.888464, 0.899660, 0.875142). The vectorizer and classifier were newly fit
+  inside each training fold.
+- Drew 20 deterministic balanced unmatched samples (seeds 42-61), each with
+  210 rows per quadrant and 42 rows per quadrant per fold, from the exact-
+  deduplicated/manual-exclusion source pools. Sampling was independent within
+  quadrant, without pairwise matching, and restricted to the original v2
+  inclusive common character-length supports: benchmark 103-672 and casual
+  52-711. Frozen held-out IDs were excluded before sampling; held-out labels
+  were not consulted.
+- The 20 unmatched sample mean CV AUROCs averaged 0.913403 (population SD
+  0.008427; range 0.898044-0.931604). Every seed mean exceeded frozen v2;
+  frozen-v2 minus unmatched mean was -0.017711.
+- Frozen-v2 format-specific training-only mean CV AUROC was 0.886168 for
+  benchmark (fold range 0.857143-0.911565) and 0.963379 for casual (fold range
+  0.948413-0.979025).
+- Runtime was 10.585 seconds with Python 3.12.3, NumPy 1.26.4, and
+  scikit-learn 1.5.2. Source dataset revision was
+  `a50e4c983e7e66ebbe8f160e3549cc98e29271d4`; frozen-v2 SHA-256 remained
+  `4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639`.
+- Conclusion: v2 pairwise length matching did not create the high lexical
+  identifiability. Unmatched length-support-controlled samples were slightly
+  more identifiable, strengthening the source/provenance-confounding concern.

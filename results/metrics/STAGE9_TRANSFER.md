@@ -34,3 +34,18 @@
 | casual_eval | 90 | -6.929648 | -7.151539 | 2.005650 | 0.000000 | 0.000000 |
 | bench_deploy | 90 | -10.414749 | -10.030705 | 2.098189 | 0.000000 | 1.000000 |
 | casual_deploy | 90 | -18.122025 | -16.925698 | 6.651918 | 0.000000 | 1.000000 |
+
+## Paired decision-score shifts versus English
+
+A shift is the target-language score minus the English score for the same stable ID. SD is the population SD over the 90 paired examples in each quadrant.
+
+| Transfer | Quadrant | n | Mean shift | SD of shift |
+|---|---|---:|---:|---:|
+| EN->ES | bench_eval | 90 | -14.098305 | 5.933570 |
+| EN->ES | casual_eval | 90 | -16.200841 | 3.625197 |
+| EN->ES | bench_deploy | 90 | 1.307466 | 5.071057 |
+| EN->ES | casual_deploy | 90 | 0.515495 | 3.913767 |
+| EN->JA | bench_eval | 90 | -18.465254 | 3.938013 |
+| EN->JA | casual_eval | 90 | -20.870874 | 3.606263 |
+| EN->JA | bench_deploy | 90 | -2.207883 | 5.236618 |
+| EN->JA | casual_deploy | 90 | -2.331581 | 3.971470 |

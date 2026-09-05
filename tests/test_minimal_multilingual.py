@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.evaluate_multilingual_transfer import expected_calibration_error
+from src.evaluate_multilingual_transfer import expected_calibration_error, paired_shift
 from src.translation_qa import fixed_manual_ids, structural_qa
 from src.translate_prompts import (
     LANGUAGES,
@@ -50,3 +50,30 @@ def test_calibration_error_is_zero_for_perfect_binary_probabilities():
     labels = np.asarray([0, 0, 1, 1])
     probabilities = np.asarray([0.0, 0.0, 1.0, 1.0])
     assert expected_calibration_error(labels, probabilities) == 0.0
+
+
+def test_paired_shift_reports_each_quadrant_mean_and_population_sd():
+    english = []
+    target = []
+    quadrants = ("bench_eval", "casual_eval", "bench_deploy", "casual_deploy")
+    for quadrant_index, quadrant in enumerate(quadrants):
+        for index in range(90):
+            stable_id = f"{quadrant}:{index}"
+            context_label = int(quadrant.endswith("eval"))
+            english.append({
+                "stable_id": stable_id,
+                "quadrant": quadrant,
+                "context_label": context_label,
+                "decision_score": float(index),
+            })
+            target.append({
+                "stable_id": stable_id,
+                "quadrant": quadrant,
+                "context_label": context_label,
+                "decision_score": float(index + quadrant_index + (index % 2)),
+            })
+    shifts = paired_shift(english, target)["quadrants"]
+    for quadrant_index, quadrant in enumerate(quadrants):
+        assert shifts[quadrant]["n"] == 90
+        assert shifts[quadrant]["mean_paired_decision_score_delta_vs_english"] == quadrant_index + 0.5
+        assert shifts[quadrant]["std_paired_decision_score_delta_population"] == 0.5
