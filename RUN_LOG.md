@@ -386,3 +386,42 @@ For each run include:
   `results/metrics/ENGLISH_GO_NO_GO.md`, probe-specific JSON/CSV reports and
   predictions, source-diagnostic JSON/CSVs, figures, and local fitted pipeline
   artifacts. Translation and optional geometry were not started.
+
+## 2026-09-05 - Minimal held-out multilingual transfer checkpoint
+
+- Translated only the 360 frozen test rows into Spanish and Japanese with
+  `deepseek/deepseek-v4-flash-0731` through OpenRouter, temperature 0, seed 42,
+  reasoning excluded, stable IDs/order/split preserved, and resumable ignored
+  per-ID/language caching. The initial 720 calls took 108.619 seconds. Focused
+  retries corrected instruction-following, Chinese-instead-of-Japanese, omitted
+  structure, and wrapper-output failures; no training rows were translated.
+- Final translation SHA-256: Spanish
+  `209acb342096382a2034ee06d7ccbf6823c931e2982e1cc7bb91f6cf74b8456b`;
+  Japanese `52a4edfb0d1bf84fd279940508f7a834211fc58aecbbdaca502361ee46d6d30c`.
+  QA checked 720 rows and a frozen 16-translation manual sample. Remaining
+  flags were four Spanish and 92 Japanese number-format differences, one
+  Spanish and 24 Japanese choice-label punctuation differences; no remaining
+  detected empty/identical/extreme-length/preamble/answer-generation/target-
+  script failures. Japanese semantic nuance was not human-fluency validated.
+- Extracted both languages using pinned Qwen revision
+  `c202236235762e1c871ad0ccb60c8ee5ba337b9a`, `Qwen3_5ForCausalLM`, block
+  hooks 1-32, final rightmost non-padding token, batch size 4, consecutive
+  filtered frozen-manifest rows, dynamic right padding, no truncation, no
+  generation, and float32 storage. Frozen dataset SHA-256 was rechecked
+  immediately before each extraction. Total runner time was 149.103 seconds.
+- Spanish extraction: 22.717 seconds, 15.847 prompts/s, peak allocated VRAM
+  17,766.206 MiB, shape `(360, 32, 4096)`, artifact SHA-256
+  `27a37b4bc363314fa06e0380a6190ea6bde0f7bdb10885ea0849fc2a86550585`.
+  Japanese: 16.091 seconds, 22.372 prompts/s, peak allocated VRAM 17,760.370
+  MiB, same shape, artifact SHA-256
+  `4ff9680557bc903d42df91f870a0e462a40735dfc17d51ea179d8391ec9cb906`.
+  Both passed finite-float32, metadata/order, exact save/reload checks.
+- Applied frozen English Probe B block 32 artifact
+  `c6039d72695ac36fe2c422b5d563e8f98ed90fb5b743c1e1a29f67fbc084652d`
+  without fitting or refitting. AUROC / accuracy: EN-to-EN 0.997284 / 0.966667;
+  EN-to-ES 0.881265 / 0.575000; EN-to-JA 0.864259 / 0.500000. Mean scores shifted
+  from -0.193214 (EN) to -7.312260 (ES) and -11.162112 (JA); fixed-threshold
+  predicted-evaluation rates were 0.527778, 0.075000, and 0.000000.
+- Interpretation remains explicitly source-confounded, not clean evaluation
+  awareness. The multilingual result preserves substantial rank information
+  but has severe language-dependent score/calibration shifts.

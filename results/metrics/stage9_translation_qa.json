@@ -1,0 +1,59 @@
+{
+  "stage": "minimal held-out translation QA",
+  "completed_at_utc": "2026-09-05T03:23:55.560681+00:00",
+  "dataset_sha256": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+  "rows_checked": 720,
+  "rows_per_language": 360,
+  "metadata_id_order_split_preservation": true,
+  "translation_files": {
+    "spanish": {
+      "path": "data/translated/spanish_test_v2.jsonl",
+      "sha256": "209acb342096382a2034ee06d7ccbf6823c931e2982e1cc7bb91f6cf74b8456b"
+    },
+    "japanese": {
+      "path": "data/translated/japanese_test_v2.jsonl",
+      "sha256": "52a4edfb0d1bf84fd279940508f7a834211fc58aecbbdaca502361ee46d6d30c"
+    }
+  },
+  "flag_counts": {
+    "spanish": {
+      "numbers_changed": 4,
+      "answer_choice_labels_changed": 1
+    },
+    "japanese": {
+      "numbers_changed": 92,
+      "answer_choice_labels_changed": 24
+    }
+  },
+  "rows_with_any_flag": {
+    "spanish": 5,
+    "japanese": 112
+  },
+  "character_length_ratio": {
+    "spanish": {
+      "min": 0.4636363636363636,
+      "median": 1.0933243769109606,
+      "max": 1.4150943396226414
+    },
+    "japanese": {
+      "min": 0.2440944881889764,
+      "median": 0.4746618729669577,
+      "max": 0.8258620689655173
+    }
+  },
+  "manual_sample_ids": [
+    "bench_eval__1007__636068bc81f9",
+    "bench_eval__161__cd634ac0558b",
+    "casual_eval__32__b88f99b5b6dc",
+    "casual_eval__471__1822a4be7718",
+    "bench_deploy__381__f47febf13ca2",
+    "bench_deploy__331__46cffab82a32",
+    "casual_deploy__232__0dd99c86d646",
+    "casual_deploy__164__2271373c847a"
+  ],
+  "manual_sample_rows": 16,
+  "manual_review_scope": "Structural presentation only; Japanese semantic nuance was not human-fluency validated.",
+  "qa_policy": "Flag only; no rows removed or modified.",
+  "qa_csv": "results/metrics/stage9_translation_qa.csv",
+  "manual_sample": "results/metrics/STAGE9_TRANSLATION_SAMPLE.md"
+}

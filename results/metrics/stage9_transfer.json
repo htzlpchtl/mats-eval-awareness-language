@@ -1,0 +1,336 @@
+{
+  "checkpoint": "minimal multilingual frozen English Probe B transfer",
+  "completed_at_utc": "2026-09-05T03:29:56.649490+00:00",
+  "interpretation": "Source-confounded activation signal, not clean evaluation awareness. English TF-IDF CV AUROC was 0.895692 and cross-format transfer was 0.799/0.657.",
+  "probe_application": "prediction only; no fit or target-language refit",
+  "probe_path": "artifacts/probes/probe_b_english.joblib",
+  "probe_sha256": "c6039d72695ac36fe2c422b5d563e8f98ed90fb5b743c1e1a29f67fbc084652d",
+  "english_activation_sha256": "dbac459e5670ee9e61fa90c7e62f4e60ce305589b6d1c55ac2b041c7c90136f8",
+  "dataset_sha256": "4e42d1ce8bd19de99538b33c872e7a411e3846f3e72b8026e2ac7b09863d2639",
+  "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "layer_index": 31,
+  "layer_number": 32,
+  "frozen_parameter_hashes": {
+    "scaler_mean": "63bb62700b8097cf746614ec9fc7339f08f62bcabf474d01ce2d54661d9142fc",
+    "scaler_scale": "a19b33b0feab7970668cc2d9c9377394d036d400c3ebf9a668a6bc6e550c1423",
+    "classifier_coef": "c526ef7b4e4d06562104d7f6df4af6385f0a9db2535cd6991c6d7c3a3cd9e247",
+    "classifier_intercept": "e8fcb65dc58748157d546a5f7c7e478114dd6e3070f07122190f37f4b5451cea"
+  },
+  "inputs": {
+    "spanish": {
+      "translation_sha256": "209acb342096382a2034ee06d7ccbf6823c931e2982e1cc7bb91f6cf74b8456b",
+      "activation_sha256": "27a37b4bc363314fa06e0380a6190ea6bde0f7bdb10885ea0849fc2a86550585"
+    },
+    "japanese": {
+      "translation_sha256": "52a4edfb0d1bf84fd279940508f7a834211fc58aecbbdaca502361ee46d6d30c",
+      "activation_sha256": "4ff9680557bc903d42df91f870a0e462a40735dfc17d51ea179d8391ec9cb906"
+    }
+  },
+  "evaluations": {
+    "EN->EN": {
+      "evaluation": "EN->EN",
+      "language": "english",
+      "n": 360,
+      "positives": 180,
+      "negatives": 180,
+      "auroc": 0.997283950617284,
+      "accuracy": 0.9666666666666667,
+      "confusion_matrix": {
+        "labels": [
+          0,
+          1
+        ],
+        "matrix": [
+          [
+            169,
+            11
+          ],
+          [
+            1,
+            179
+          ]
+        ],
+        "tn": 169,
+        "fp": 11,
+        "fn": 1,
+        "tp": 179
+      },
+      "score_summary": {
+        "mean": -0.19321398701932696,
+        "median": 1.971977174282074,
+        "std_population": 13.250698959805726,
+        "min": -31.707653045654297,
+        "max": 20.662113189697266,
+        "mean_context_eval": 11.612226659721799,
+        "mean_context_deploy": -11.998654633760452
+      },
+      "fixed_threshold_calibration": {
+        "decision_threshold": 0.0,
+        "probability_threshold": 0.5,
+        "mean_predicted_probability": 0.5213746744559172,
+        "observed_positive_rate": 0.5,
+        "predicted_positive_rate": 0.5277777777777778,
+        "brier_score": 0.02396975301311285,
+        "log_loss": 0.09188613189442472,
+        "ece_10_equal_width_bins": 0.025187612258795566
+      },
+      "quadrants": {
+        "bench_eval": {
+          "n": 90,
+          "context_label": 1,
+          "mean_decision_score": 9.283227131101821,
+          "median_decision_score": 9.830058097839355,
+          "std_decision_score_population": 3.7537441844825707,
+          "min_decision_score": -2.2697384357452393,
+          "max_decision_score": 15.419941902160645,
+          "proportion_classified_evaluation": 0.9888888888888889,
+          "proportion_correct": 0.9888888888888889
+        },
+        "casual_eval": {
+          "n": 90,
+          "context_label": 1,
+          "mean_decision_score": 13.941226188341776,
+          "median_decision_score": 14.996950626373291,
+          "std_decision_score_population": 4.034197955561196,
+          "min_decision_score": 2.623314619064331,
+          "max_decision_score": 20.662113189697266,
+          "proportion_classified_evaluation": 1.0,
+          "proportion_correct": 1.0
+        },
+        "bench_deploy": {
+          "n": 90,
+          "context_label": 0,
+          "mean_decision_score": -8.206865518622928,
+          "median_decision_score": -9.20846176147461,
+          "std_decision_score_population": 5.383581914143494,
+          "min_decision_score": -18.436155319213867,
+          "max_decision_score": 5.985734939575195,
+          "proportion_classified_evaluation": 0.12222222222222222,
+          "proportion_correct": 0.8777777777777778
+        },
+        "casual_deploy": {
+          "n": 90,
+          "context_label": 0,
+          "mean_decision_score": -15.790443748897976,
+          "median_decision_score": -14.670346736907959,
+          "std_decision_score_population": 6.774825936451609,
+          "min_decision_score": -31.707653045654297,
+          "max_decision_score": -4.142569065093994,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 1.0
+        }
+      }
+    },
+    "EN->ES": {
+      "evaluation": "EN->ES",
+      "language": "spanish",
+      "n": 360,
+      "positives": 180,
+      "negatives": 180,
+      "auroc": 0.8812654320987655,
+      "accuracy": 0.575,
+      "confusion_matrix": {
+        "labels": [
+          0,
+          1
+        ],
+        "matrix": [
+          [
+            180,
+            0
+          ],
+          [
+            153,
+            27
+          ]
+        ],
+        "tn": 180,
+        "fp": 0,
+        "fn": 153,
+        "tp": 27
+      },
+      "score_summary": {
+        "mean": -7.312260252899594,
+        "median": -6.274652481079102,
+        "std_population": 6.159220457752228,
+        "min": -26.144384384155273,
+        "max": 5.020901679992676,
+        "mean_context_eval": -3.537346359756258,
+        "mean_context_deploy": -11.08717414604293
+      },
+      "fixed_threshold_calibration": {
+        "decision_threshold": 0.0,
+        "probability_threshold": 0.5,
+        "mean_predicted_probability": 0.09670861651426867,
+        "observed_positive_rate": 0.5,
+        "predicted_positive_rate": 0.075,
+        "brier_score": 0.36687806858082217,
+        "log_loss": 1.9655874506264575,
+        "ece_10_equal_width_bins": 0.4032913834857313
+      },
+      "quadrants": {
+        "bench_eval": {
+          "n": 90,
+          "context_label": 1,
+          "mean_decision_score": -4.8150780253940155,
+          "median_decision_score": -3.5426571369171143,
+          "std_decision_score_population": 4.254588903761257,
+          "min_decision_score": -18.2731876373291,
+          "max_decision_score": 2.5162856578826904,
+          "proportion_classified_evaluation": 0.06666666666666667,
+          "proportion_correct": 0.06666666666666667
+        },
+        "casual_eval": {
+          "n": 90,
+          "context_label": 1,
+          "mean_decision_score": -2.2596146941184996,
+          "median_decision_score": -2.2369885444641113,
+          "std_decision_score_population": 3.4583981026163113,
+          "min_decision_score": -20.057693481445312,
+          "max_decision_score": 5.020901679992676,
+          "proportion_classified_evaluation": 0.23333333333333334,
+          "proportion_correct": 0.23333333333333334
+        },
+        "bench_deploy": {
+          "n": 90,
+          "context_label": 0,
+          "mean_decision_score": -6.899399435520172,
+          "median_decision_score": -6.6227781772613525,
+          "std_decision_score_population": 2.487981815599245,
+          "min_decision_score": -16.1807804107666,
+          "max_decision_score": -1.724597454071045,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 1.0
+        },
+        "casual_deploy": {
+          "n": 90,
+          "context_label": 0,
+          "mean_decision_score": -15.274948856565688,
+          "median_decision_score": -15.314702987670898,
+          "std_decision_score_population": 4.489084408240957,
+          "min_decision_score": -26.144384384155273,
+          "max_decision_score": -4.406268119812012,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 1.0
+        }
+      },
+      "score_shift_vs_EN->EN": {
+        "mean_paired_decision_score_delta_vs_english": -7.119046265880267,
+        "median_paired_decision_score_delta_vs_english": -6.584557205438614,
+        "std_paired_decision_score_delta_population": 9.352324354718364,
+        "mean_delta_context_eval": -15.149573019478057,
+        "mean_delta_context_deploy": 0.9114804877175225,
+        "paired_score_pearson_r": 0.7722393561648644
+      }
+    },
+    "EN->JA": {
+      "evaluation": "EN->JA",
+      "language": "japanese",
+      "n": 360,
+      "positives": 180,
+      "negatives": 180,
+      "auroc": 0.8642592592592593,
+      "accuracy": 0.5,
+      "confusion_matrix": {
+        "labels": [
+          0,
+          1
+        ],
+        "matrix": [
+          [
+            180,
+            0
+          ],
+          [
+            180,
+            0
+          ]
+        ],
+        "tn": 180,
+        "fp": 0,
+        "fn": 180,
+        "tp": 0
+      },
+      "score_summary": {
+        "mean": -11.162112106548415,
+        "median": -9.715153694152832,
+        "std_population": 5.63168821900988,
+        "min": -32.62226867675781,
+        "max": -1.3561612367630005,
+        "mean_context_eval": -8.055837342474195,
+        "mean_context_deploy": -14.268386870622635
+      },
+      "fixed_threshold_calibration": {
+        "decision_threshold": 0.0,
+        "probability_threshold": 0.5,
+        "mean_predicted_probability": 0.002216992912267891,
+        "observed_positive_rate": 0.5,
+        "predicted_positive_rate": 0.0,
+        "brier_score": 0.496966115472645,
+        "log_loss": 4.030231138647718,
+        "ece_10_equal_width_bins": 0.49892114544486804
+      },
+      "quadrants": {
+        "bench_eval": {
+          "n": 90,
+          "context_label": 1,
+          "mean_decision_score": -9.182026500172086,
+          "median_decision_score": -9.410660743713379,
+          "std_decision_score_population": 1.8322590636896676,
+          "min_decision_score": -14.187573432922363,
+          "max_decision_score": -3.5534908771514893,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 0.0
+        },
+        "casual_eval": {
+          "n": 90,
+          "context_label": 1,
+          "mean_decision_score": -6.9296481847763065,
+          "median_decision_score": -7.151539325714111,
+          "std_decision_score_population": 2.0056495424129195,
+          "min_decision_score": -13.393986701965332,
+          "max_decision_score": -2.466700792312622,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 0.0
+        },
+        "bench_deploy": {
+          "n": 90,
+          "context_label": 0,
+          "mean_decision_score": -10.414748684565227,
+          "median_decision_score": -10.030705451965332,
+          "std_decision_score_population": 2.098189177906291,
+          "min_decision_score": -18.21253204345703,
+          "max_decision_score": -5.313960552215576,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 1.0
+        },
+        "casual_deploy": {
+          "n": 90,
+          "context_label": 0,
+          "mean_decision_score": -18.122025056680044,
+          "median_decision_score": -16.925698280334473,
+          "std_decision_score_population": 6.65191832325021,
+          "min_decision_score": -32.62226867675781,
+          "max_decision_score": -1.3561612367630005,
+          "proportion_classified_evaluation": 0.0,
+          "proportion_correct": 1.0
+        }
+      },
+      "score_shift_vs_EN->EN": {
+        "mean_paired_decision_score_delta_vs_english": -10.968898119529088,
+        "median_paired_decision_score_delta_vs_english": -11.579070508480072,
+        "std_paired_decision_score_delta_population": 9.712246405342423,
+        "mean_delta_context_eval": -19.668064002195994,
+        "mean_delta_context_deploy": -2.2697322368621826,
+        "paired_score_pearson_r": 0.7569247141709251
+      }
+    }
+  },
+  "independent_csv_reload_aurocs": {
+    "EN->EN": 0.997283950617284,
+    "EN->ES": 0.8812654320987655,
+    "EN->JA": 0.8642592592592593
+  },
+  "predictions_path": "results/metrics/stage9_multilingual_predictions.csv",
+  "predictions_sha256": "e49144460049f17059c4c9917775bdc3d76c37f848852460a22f146b58659a4e"
+}
