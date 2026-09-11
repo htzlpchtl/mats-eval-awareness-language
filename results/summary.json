@@ -1,0 +1,8 @@
+{
+  "note": "Post-hoc descriptive checks; unchanged fitted probe, not a fresh independent test.",
+  "excluded_related_test_rows": 21,
+  "remaining_n": 339,
+  "remaining_auroc": 0.996995108315863,
+  "remaining_accuracy": 0.9646017699115044,
+  "remaining_errors": 12
+}

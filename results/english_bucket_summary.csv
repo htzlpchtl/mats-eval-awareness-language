@@ -1,0 +1,7 @@
+quadrant,error,n,median_chars,median_words,contains_digit,spaced_punctuation,lowercase_initial
+bench_deploy,False,79,250.0,46.0,13,0,0
+bench_deploy,True,11,175.0,30.0,8,0,0
+bench_eval,False,89,243.0,45.0,41,0,0
+bench_eval,True,1,302.0,43.0,0,0,0
+casual_deploy,False,90,125.5,24.0,34,0,27
+casual_eval,False,90,109.0,26.0,11,88,90

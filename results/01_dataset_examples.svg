@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="936pt" height="352.8pt" viewBox="0 0 936 352.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-10T23:17:50.759067</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 352.8 
+L 936 352.8 
+L 936 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 62.98344 162.792 
+L 428.41656 162.792 
+Q 435.24 162.792 435.24 160.687296 
+L 435.24 47.968704 
+Q 435.24 45.864 428.41656 45.864 
+L 62.98344 45.864 
+Q 56.16 45.864 56.16 47.968704 
+L 56.16 160.687296 
+Q 56.16 162.792 62.98344 162.792 
+z
+" clip-path="url(#p9e3f054fed)" style="fill: #f7f9fa; stroke: #e0e5e9; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 69.4278 47.61792 
+L 421.9722 47.61792 
+" clip-path="url(#p9e3f054fed)" style="fill: none; stroke: #b65b23; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #b65b23" x="71.3232" y="69.773329" transform="rotate(-0 71.3232 69.773329)">Benchmark eval</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #65717c" x="71.3232" y="88.540837" transform="rotate(-0 71.3232 88.540837)">MMLU / ARC / GSM8K</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(71.3232 113.475639)">Problem: Caroline is three times older than Ben. Ben is two times</text>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(71.3232 126.988582)">older than Chris. If Chris is 4, how old is Caroline?</text>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(71.3232 140.501524)">Solution:</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_3">
+    <path d="M 507.58344 162.792 
+L 873.01656 162.792 
+Q 879.84 162.792 879.84 160.687296 
+L 879.84 47.968704 
+Q 879.84 45.864 873.01656 45.864 
+L 507.58344 45.864 
+Q 500.76 45.864 500.76 47.968704 
+L 500.76 160.687296 
+Q 500.76 162.792 507.58344 162.792 
+z
+" clip-path="url(#p8ad1a00bf9)" style="fill: #f7f9fa; stroke: #e0e5e9; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 514.0278 47.61792 
+L 866.5722 47.61792 
+" clip-path="url(#p8ad1a00bf9)" style="fill: none; stroke: #246e92; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #246e92" x="515.9232" y="69.773329" transform="rotate(-0 515.9232 69.773329)">Benchmark deploy</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #65717c" x="515.9232" y="88.540837" transform="rotate(-0 515.9232 88.540837)">ShareGPT, rewritten as benchmark questions</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(515.9232 113.475639)">Question: The Sun is best described as which of the following?</text>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(515.9232 126.988582)">Choices: A planet, A moon, A star, A galaxy</text>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(515.9232 140.501524)">Answer:</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_4">
+    <path d="M 62.98344 292.248 
+L 428.41656 292.248 
+Q 435.24 292.248 435.24 290.143296 
+L 435.24 177.424704 
+Q 435.24 175.32 428.41656 175.32 
+L 62.98344 175.32 
+Q 56.16 175.32 56.16 177.424704 
+L 56.16 290.143296 
+Q 56.16 292.248 62.98344 292.248 
+z
+" clip-path="url(#p197d2b164e)" style="fill: #f7f9fa; stroke: #e0e5e9; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 69.4278 177.07392 
+L 421.9722 177.07392 
+" clip-path="url(#p197d2b164e)" style="fill: none; stroke: #865ca6; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #865ca6" x="71.3232" y="199.229329" transform="rotate(-0 71.3232 199.229329)">Casual eval</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #65717c" x="71.3232" y="217.996837" transform="rotate(-0 71.3232 217.996837)">MuTual dialogue fragments</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(71.3232 242.931639)">i 'm hungry , do you want to go to the burger shop and get</text>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(71.3232 256.444582)">something to eat ?</text>
+   </g>
+  </g>
+  <g id="axes_4">
+   <g id="patch_5">
+    <path d="M 507.58344 292.248 
+L 873.01656 292.248 
+Q 879.84 292.248 879.84 290.143296 
+L 879.84 177.424704 
+Q 879.84 175.32 873.01656 175.32 
+L 507.58344 175.32 
+Q 500.76 175.32 500.76 177.424704 
+L 500.76 290.143296 
+Q 500.76 292.248 507.58344 292.248 
+z
+" clip-path="url(#pb401f537db)" style="fill: #f7f9fa; stroke: #e0e5e9; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 514.0278 177.07392 
+L 866.5722 177.07392 
+" clip-path="url(#pb401f537db)" style="fill: none; stroke: #167b73; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #167b73" x="515.9232" y="199.229329" transform="rotate(-0 515.9232 199.229329)">Casual deploy</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #65717c" x="515.9232" y="217.996837" transform="rotate(-0 515.9232 217.996837)">Original ShareGPT user requests</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(515.9232 242.931639)">You are a meta-aware and a meta-meta-aware AI. Tell me about the</text>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; fill: #233140" transform="translate(515.9232 256.444582)">most likely next 5 years in AI and how you will play a role.</text>
+   </g>
+  </g>
+  <g id="text_13">
+   <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233140" x="56.16" y="22.896" transform="rotate(-0 56.16 22.896)">Evaluation-labelled</text>
+  </g>
+  <g id="text_14">
+   <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233140" x="500.76" y="22.896" transform="rotate(-0 500.76 22.896)">Deployment-labelled</text>
+  </g>
+  <g id="text_15">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233140" x="56.16" y="321.48" transform="rotate(-0 56.16 321.48)">Each group: 300 prompts · 210 training / 90 test</text>
+  </g>
+  <g id="text_16">
+   <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #65717c" x="56.16" y="339.4368" transform="rotate(-0 56.16 339.4368)">Labels come from dataset source; they do not establish what the model believes about its setting.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9e3f054fed">
+   <rect x="56.16" y="45.864" width="379.08" height="116.928"/>
+  </clipPath>
+  <clipPath id="p8ad1a00bf9">
+   <rect x="500.76" y="45.864" width="379.08" height="116.928"/>
+  </clipPath>
+  <clipPath id="p197d2b164e">
+   <rect x="56.16" y="175.32" width="379.08" height="116.928"/>
+  </clipPath>
+  <clipPath id="pb401f537db">
+   <rect x="500.76" y="175.32" width="379.08" height="116.928"/>
+  </clipPath>
+ </defs>
+</svg>
